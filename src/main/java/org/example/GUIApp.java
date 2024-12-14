@@ -1,6 +1,8 @@
 package org.example;
 
-import org.example.GUIComponents.*;
+import org.example.GUIComponents.GUIComponentIF;
+import org.example.GUIComponents.GUIMenu;
+import org.example.GUIComponents.StockEntryPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,10 +11,10 @@ import java.util.Map;
 
 public class GUIApp {
 
+    public JFrame frame;
     // custom GUI components
     GUIMenu menuComponent;
     Map<String, GUIComponentIF> componentMapper = new HashMap<>();
-    private JFrame frame;
     private Container contentPane;
 
     public GUIApp() {
@@ -28,7 +30,7 @@ public class GUIApp {
         renderMenu();
         renderRegions();
 
-        frame.setSize(800, 800);
+        frame.setSize(600, 800);
         frame.setVisible(true);
     }
 

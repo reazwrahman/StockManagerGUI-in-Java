@@ -1,1 +1,14 @@
-{"tsla":{"quantity":897.0,"cost":234.12},"voo":{"quantity":123.123,"cost":1246.12}}
+{
+  "TSLA": {
+    "quantity": 12.0,
+    "cost": 234.12
+  },
+  "VOO": {
+    "quantity": 123.98,
+    "cost": 1267.0
+  },
+  "VTSAX": {
+    "quantity": 56.0,
+    "cost": 98.98
+  }
+}

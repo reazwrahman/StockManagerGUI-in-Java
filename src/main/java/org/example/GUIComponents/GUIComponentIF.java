@@ -10,6 +10,4 @@ public interface GUIComponentIF {
     void reset();
 
     String validateInput();
-
-    String getOrder();
 }

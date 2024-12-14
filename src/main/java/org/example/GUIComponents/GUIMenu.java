@@ -10,14 +10,14 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 
 public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
+    private final JFrame frame;
+    private final FileHandler fileHandler;
     // menu related
     JMenuBar menuBar;
     JMenu orderMenu;
     JMenu helpMenu;
     JMenuItem menuItem;
     Map<String, GUIComponentIF> componentMapper;
-    private final JFrame frame;
-    private final FileHandler fileHandler;
 
     public GUIMenu(JFrame guiFrame, Map<String, GUIComponentIF> componentsMapped) {
         frame = guiFrame;
@@ -55,19 +55,6 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         return "";
     }
 
-    @Override
-    public String getOrder() {
-        String order = "Pizza Order\n" +
-                "===========\n";
-
-        order += componentMapper.get(BorderLayout.WEST).getOrder(); // crust
-        order += componentMapper.get(BorderLayout.CENTER).getOrder(); // toppings
-        order += componentMapper.get(BorderLayout.EAST).getOrder(); // sides
-        order += componentMapper.get(BorderLayout.SOUTH).getOrder(); // delivery address
-
-        order += "\n***END OF ORDER ***\n";
-        return order;
-    }
 
     @Override
     public void render() {
@@ -150,7 +137,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         public void actionPerformed(ActionEvent e) {
             String errorMessage = validateInput();
             if (errorMessage.isEmpty()) { // valid inputs
-                String order = getOrder();
+                String order = "";
                 JOptionPane.showMessageDialog(frame,
                         order,
                         "Order Saved",

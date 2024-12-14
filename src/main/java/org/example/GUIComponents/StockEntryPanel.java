@@ -1,15 +1,14 @@
 package org.example.GUIComponents;
 
-import org.example.GUIApp;
-
 import com.google.gson.Gson;
+import org.example.Configs;
+import org.example.GUIApp;
 import org.example.Uitility.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,26 +19,32 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int COLUMNS = 10;
     private static final int WIDTH = 70;
     private static final int HEIGHT = 26;
-
+    GUIApp m_app;
+    Map<String, Map<String, Float>> m_stockEntries;
+    FileHandler m_fileHandler;
+    Configs m_configs;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
     private JButton m_deleteButton;
     private JButton m_submitButton;
-
     private JPanel m_stocksHolder;
-    GUIApp m_app;
 
-    Map<String, Map<String, Float>> m_stockEntries;
-    FileHandler m_fileHandler;
-
-
-    public StockEntryPanel(GUIApp app){
+    public StockEntryPanel(GUIApp app) {
         m_app = app;
         m_stockEntries = new HashMap<>();
         m_fileHandler = new FileHandler();
+        m_configs = new Configs();
+    }
 
+    @Override
+    public void render() {
+        // setup main panel
+        m_panel = new JPanel();
+        m_panel.setLayout(new BoxLayout(m_panel, BoxLayout.Y_AXIS));
+        m_panel.setBorder(BorderFactory.createEmptyBorder(3, 40, 3, 20));
+
+        // setup button panel
         m_buttonsPanel = new JPanel();
-
         m_addButton = new JButton("Add");
         m_addButton.setActionCommand("add");
         m_addButton.addActionListener(this);
@@ -52,26 +57,15 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_submitButton.setActionCommand("submit");
         m_submitButton.addActionListener(this);
 
-    }
-
-    @Override
-    public void render(){
-        // setup main panel
-        m_panel = new JPanel();
-        m_panel.setLayout(new BoxLayout(m_panel, BoxLayout.Y_AXIS));
-        m_panel.setBorder(BorderFactory.createEmptyBorder(3, 40, 3, 20));
-
-
         m_buttonsPanel.add(m_addButton);
         m_buttonsPanel.add(m_deleteButton);
         m_buttonsPanel.add(m_submitButton);
         m_panel.add(m_buttonsPanel);
 
         addEntryLabels();
-        System.out.println(m_panel.getComponents().length);
     }
 
-    private void addEntryLabels(){
+    private void addEntryLabels() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -80,7 +74,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         JLabel label1 = new JLabel("Ticker");
         JLabel label2 = new JLabel("Quantity");
         JLabel label3 = new JLabel("Avg. Cost");
-        Dimension textFieldSize = new Dimension(100, 25); // Width: 100px, Height: 25px
+        Dimension textFieldSize = new Dimension(100, 25);
         label1.setPreferredSize(textFieldSize);
         label2.setPreferredSize(textFieldSize);
         label3.setPreferredSize(textFieldSize);
@@ -100,7 +94,7 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     }
 
-    private void addStockEntry(){
+    private void addStockEntry() {
         JPanel stockPanel = new JPanel();
         stockPanel.setLayout(new BoxLayout(stockPanel, BoxLayout.X_AXIS));
         stockPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -126,7 +120,6 @@ public class StockEntryPanel extends AbstractGUIComponent
         stockPanel.add(textField3);
         stockPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
-
         // Wrap the panel in a top-aligned container
         JPanel topAlignedPanel = new JPanel();
         topAlignedPanel.setLayout(new BorderLayout());
@@ -136,25 +129,60 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_panel.add(Box.createVerticalStrut(5));
     }
 
-    private void deleteStockEntry(){
+    private void deleteStockEntry() {
         java.awt.Component[] components = m_panel.getComponents();
         int length = components.length;
         if (length > 2) { // 0: buttons, 1: labels
-            m_panel.remove(length-1); // gap filler (Box$Filler)
-            m_panel.remove(length-2); // stock entry panel
+            m_panel.remove(length - 1); // gap filler (Box$Filler)
+            m_panel.remove(length - 2); // stock entry panel
         }
     }
 
-    private void readEntries(){
+    private void readEntries() {
+        String validationResult = validateInput();
+        if (!validationResult.isEmpty()) {
+            JOptionPane.showMessageDialog(m_app.frame,
+                    validationResult,
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
         java.awt.Component[] components = m_panel.getComponents();
         if (components.length > 2) {
-            for (int i = 2; i < components.length; i+=2) {
-               saveEntries(components[i]);
+            for (int i = 2; i < components.length; i += 2) {
+                saveEntries(components[i]);
             }
-
         }
     }
 
+    @Override
+    public String validateInput() {
+        java.awt.Component[] components = m_panel.getComponents();
+        if (components.length > 2) {
+            for (int i = 2; i < components.length; i += 2) {
+                JPanel parentPanel = (JPanel) components[i];
+                JPanel panel = (JPanel) parentPanel.getComponent(0);
+
+                JTextField tickerField = (JTextField) panel.getComponent(0);
+                JTextField qtyField = (JTextField) panel.getComponent(2);
+                JTextField costField = (JTextField) panel.getComponent(4);
+
+                if (tickerField.getText().isBlank() || qtyField.getText().isBlank() || costField.getText().isBlank()) {
+                    return "Stock entries can not be empty";
+                }
+
+                try {
+                    Float quantity = Float.parseFloat(qtyField.getText());
+                    Float cost = Float.parseFloat(costField.getText());
+                } catch (Exception e) {
+                    return "Stock quantity and average cost must be valid numbers";
+                }
+
+            }
+        }
+        return "";
+    }
 
     private void saveEntries(java.awt.Component component) {
         JPanel parentPanel = (JPanel) component;
@@ -164,54 +192,35 @@ public class StockEntryPanel extends AbstractGUIComponent
         JTextField qtyField = (JTextField) panel.getComponent(2);
         JTextField costField = (JTextField) panel.getComponent(4);
 
-        String ticker = tickerField.getText();
-        Float quantity = Float.parseFloat(qtyField.getText());
-        Float cost = Float.parseFloat(costField.getText());
+        if (!tickerField.getText().isBlank()) {
+            String ticker = tickerField.getText();
+            Float quantity = Float.parseFloat(qtyField.getText());
+            Float cost = Float.parseFloat(costField.getText());
 
-        Map<String, Float> innerMap = new HashMap<>();
-        innerMap.put("quantity", quantity);
-        innerMap.put("cost", cost);
-        m_stockEntries.put(ticker, innerMap);
-        System.out.println("Map form: ");
-        System.out.println(m_stockEntries);
+            Map<String, Float> innerMap = new HashMap<>();
+            innerMap.put("quantity", quantity);
+            innerMap.put("avgCost", cost);
+            m_stockEntries.put(ticker, innerMap);
+            writeToJson();
+        }
+    }
 
+    private void writeToJson() {
         Gson gson = new Gson();
         String json = gson.toJson(m_stockEntries);
-        System.out.println("JSON form: ");
-        System.out.println(json);
-        m_fileHandler.writeToFile("StockEntries.json", json);
-
-        try {
-            readFromJson();
-        } catch (Exception e) {
-            System.out.println("problem reading file");
-        }
-
+        m_fileHandler.writeToFile(m_configs.STOCK_ENTRY_FILE_NAME, json);
     }
 
-    private void readFromJson() throws IOException {
-        System.out.println("reading back now in Map form: ");
-
-            String rawData = m_fileHandler.readFromFile("StockEntries.json");
-            Gson deserialized = new Gson();
-            Map<String, Map<String, Float>> map = deserialized.fromJson(rawData, Map.class);
-            System.out.println(map);
-
-    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("add")) {
             this.addStockEntry();
             m_app.renderRegions();
-        }
-        else if(e.getActionCommand().equals("delete")) {
+        } else if (e.getActionCommand().equals("delete")) {
             deleteStockEntry();
             m_app.renderRegions();
-        }
-        else if(e.getActionCommand().equals("submit")) {
+        } else if (e.getActionCommand().equals("submit")) {
             readEntries();
-            //System.out.println(m_stockEntries);
         }
-
     }
 }

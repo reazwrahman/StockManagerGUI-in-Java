@@ -22,9 +22,5 @@ public abstract class AbstractGUIComponent implements GUIComponentIF {
         return "";
     }
 
-    @Override
-    public String getOrder() {
-        return "";
-    }
 
 }
