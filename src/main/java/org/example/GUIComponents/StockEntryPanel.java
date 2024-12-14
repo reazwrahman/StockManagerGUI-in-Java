@@ -202,6 +202,10 @@ public class StockEntryPanel extends AbstractGUIComponent
             innerMap.put("avgCost", cost);
             m_stockEntries.put(ticker, innerMap);
             writeToJson();
+            JOptionPane.showMessageDialog(m_app.frame,
+                    "Data Submitted",
+                    "Submitted",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
