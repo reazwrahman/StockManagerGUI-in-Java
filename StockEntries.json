@@ -1,1 +1,6 @@
-{"RT":{"quantity":213.0,"avgCost":123.0}}
+{
+  "VOO": {
+    "quantity": 100.0,
+    "totalCost": 100.0
+  }
+}

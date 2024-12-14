@@ -19,10 +19,10 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int COLUMNS = 10;
     private static final int WIDTH = 70;
     private static final int HEIGHT = 26;
-    GUIApp m_app;
-    Map<String, Map<String, Float>> m_stockEntries;
-    FileHandler m_fileHandler;
-    Configs m_configs;
+    private GUIApp m_app;
+    private Map<String, Map<String, Float>> m_stockMap;
+    private FileHandler m_fileHandler;
+    private Configs m_configs;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
     private JButton m_deleteButton;
@@ -31,7 +31,7 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     public StockEntryPanel(GUIApp app) {
         m_app = app;
-        m_stockEntries = new HashMap<>();
+        m_stockMap = new HashMap<>();
         m_fileHandler = new FileHandler();
         m_configs = new Configs();
     }
@@ -73,7 +73,7 @@ public class StockEntryPanel extends AbstractGUIComponent
 
         JLabel label1 = new JLabel("Ticker");
         JLabel label2 = new JLabel("Quantity");
-        JLabel label3 = new JLabel("Avg. Cost");
+        JLabel label3 = new JLabel("Total Cost");
         Dimension textFieldSize = new Dimension(100, 25);
         label1.setPreferredSize(textFieldSize);
         label2.setPreferredSize(textFieldSize);
@@ -148,11 +148,8 @@ public class StockEntryPanel extends AbstractGUIComponent
 
             return;
         }
-        java.awt.Component[] components = m_panel.getComponents();
-        if (components.length > 2) {
-            for (int i = 2; i < components.length; i += 2) {
-                saveEntries(components[i]);
-            }
+        else {
+            saveEntries();
         }
     }
 
@@ -176,7 +173,7 @@ public class StockEntryPanel extends AbstractGUIComponent
                     Float quantity = Float.parseFloat(qtyField.getText());
                     Float cost = Float.parseFloat(costField.getText());
                 } catch (Exception e) {
-                    return "Stock quantity and average cost must be valid numbers";
+                    return "Stock quantity and total cost must be valid numbers";
                 }
 
             }
@@ -184,34 +181,51 @@ public class StockEntryPanel extends AbstractGUIComponent
         return "";
     }
 
-    private void saveEntries(java.awt.Component component) {
-        JPanel parentPanel = (JPanel) component;
-        JPanel panel = (JPanel) parentPanel.getComponent(0);
+    private void saveEntries() {
+        java.awt.Component[] components = m_panel.getComponents();
 
-        JTextField tickerField = (JTextField) panel.getComponent(0);
-        JTextField qtyField = (JTextField) panel.getComponent(2);
-        JTextField costField = (JTextField) panel.getComponent(4);
+        if (components.length > 2) { // 0: buttons, 1: labels
+            for (int i = 2; i < components.length; i += 2) {
 
-        if (!tickerField.getText().isBlank()) {
-            String ticker = tickerField.getText();
-            Float quantity = Float.parseFloat(qtyField.getText());
-            Float cost = Float.parseFloat(costField.getText());
+                JPanel parentPanel = (JPanel) components[i];
+                JPanel panel = (JPanel) parentPanel.getComponent(0);
 
-            Map<String, Float> innerMap = new HashMap<>();
-            innerMap.put("quantity", quantity);
-            innerMap.put("avgCost", cost);
-            m_stockEntries.put(ticker, innerMap);
+                JTextField tickerField = (JTextField) panel.getComponent(0);
+                JTextField qtyField = (JTextField) panel.getComponent(2);
+                JTextField costField = (JTextField) panel.getComponent(4);
+
+                String ticker = tickerField.getText();
+                Float quantity = Float.parseFloat(qtyField.getText());
+                Float cost = Float.parseFloat(costField.getText());
+
+                insertToMap(ticker.toUpperCase(), quantity, cost);
+            } // end of for loop
+
             writeToJson();
             JOptionPane.showMessageDialog(m_app.frame,
                     "Data Submitted",
                     "Submitted",
                     JOptionPane.INFORMATION_MESSAGE);
-        }
+        } // end of if statement
     }
 
+    private void insertToMap(String ticker, float quantity, float cost){
+        Map<String, Float> innerMap = new HashMap<>();
+        if (m_stockMap.get(ticker) == null) {
+            innerMap.put("quantity", quantity);
+            innerMap.put("totalCost", cost);
+            m_stockMap.put(ticker, innerMap);
+        } else {
+            float existingQuantity = m_stockMap.get(ticker).get("quantity");
+            float existingCost = m_stockMap.get(ticker).get("totalCost");
+            innerMap.put("quantity", quantity+existingQuantity);
+            innerMap.put("totalCost", cost+existingCost);
+            m_stockMap.put(ticker, innerMap);
+        }
+    }
     private void writeToJson() {
         Gson gson = new Gson();
-        String json = gson.toJson(m_stockEntries);
+        String json = gson.toJson(m_stockMap);
         m_fileHandler.writeToFile(m_configs.STOCK_ENTRY_FILE_NAME, json);
     }
 
