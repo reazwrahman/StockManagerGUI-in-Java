@@ -129,13 +129,24 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_panel.add(Box.createVerticalStrut(5));
     }
 
-    private void deleteStockEntry() {
+    private boolean deleteStockEntry() {
         java.awt.Component[] components = m_panel.getComponents();
         int length = components.length;
         if (length > 2) { // 0: buttons, 1: labels
             m_panel.remove(length - 1); // gap filler (Box$Filler)
             m_panel.remove(length - 2); // stock entry panel
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public void reset(){
+        boolean panelLeft = deleteStockEntry();
+        while (panelLeft) {
+            panelLeft = deleteStockEntry();
+        }
+        m_app.renderRegions();
     }
 
     private void readEntries() {
@@ -150,10 +161,6 @@ public class StockEntryPanel extends AbstractGUIComponent
         }
         else {
             saveEntries();
-            JOptionPane.showMessageDialog(m_app.frame,
-                    "Data Submitted",
-                    "Submitted",
-                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -206,6 +213,10 @@ public class StockEntryPanel extends AbstractGUIComponent
             } // end of for loop
 
             writeToJson();
+            JOptionPane.showMessageDialog(m_app.frame,
+                    "Data Submitted",
+                    "Submitted",
+                    JOptionPane.INFORMATION_MESSAGE);
         } // end of if statement
     }
 

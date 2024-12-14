@@ -14,7 +14,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     private final FileHandler fileHandler;
     // menu related
     JMenuBar menuBar;
-    JMenu orderMenu;
+    JMenu viewMenu;
     JMenu helpMenu;
     JMenuItem menuItem;
     Map<String, GUIComponentIF> componentMapper;
@@ -61,31 +61,31 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         menuBar = new JMenuBar(); // first thing we need to add: the bar to hold "menu" objects
         frame.setJMenuBar(menuBar); // add the bar to the frame
 
-        orderMenu = new JMenu("Order"); // this is the first "menu" type object
-        orderMenu.setMnemonic(KeyEvent.VK_O);
+        viewMenu = new JMenu("View"); // this is the first "menu" type object
+        viewMenu.setMnemonic(KeyEvent.VK_V);
 
         helpMenu = new JMenu("Help");
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
-        menuBar.add(orderMenu); // add the menu object to the bar
+        menuBar.add(viewMenu); // add the menu object to the bar
         menuBar.add(helpMenu);
         addMenuItems();
     }
 
     private void addMenuItems() {
-        menuItem = new JMenuItem("New Order");
-        orderMenu.add(menuItem);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+        menuItem = new JMenuItem("Reset");
+        viewMenu.add(menuItem);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
         menuItem.addActionListener(new newListener());
 
-        menuItem = new JMenuItem("Save Order");
-        orderMenu.add(menuItem);
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
-        menuItem.addActionListener(new saveListener());
+//        menuItem = new JMenuItem("Save Order");
+//        viewMenu.add(menuItem);
+//        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+//        menuItem.addActionListener(new saveListener());
 
 
         menuItem = new JMenuItem("Exit");
-        orderMenu.add(menuItem);
+        viewMenu.add(menuItem);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
         menuItem.addActionListener(new ActionListener() {
             @Override
@@ -120,14 +120,6 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         @Override
         public void actionPerformed(ActionEvent e) {
             reset();
-            newMethod("Order has been reset!");
-        }
-
-        private void newMethod(String message) {
-            JOptionPane.showMessageDialog(frame,
-                    message,
-                    "",
-                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
