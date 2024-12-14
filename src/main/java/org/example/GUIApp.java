@@ -30,7 +30,7 @@ public class GUIApp {
         renderMenu();
         renderRegions();
 
-        frame.setSize(600, 800);
+        frame.setSize(600, 400);
         frame.setVisible(true);
     }
 
