@@ -150,6 +150,10 @@ public class StockEntryPanel extends AbstractGUIComponent
         }
         else {
             saveEntries();
+            JOptionPane.showMessageDialog(m_app.frame,
+                    "Data Submitted",
+                    "Submitted",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -202,10 +206,6 @@ public class StockEntryPanel extends AbstractGUIComponent
             } // end of for loop
 
             writeToJson();
-            JOptionPane.showMessageDialog(m_app.frame,
-                    "Data Submitted",
-                    "Submitted",
-                    JOptionPane.INFORMATION_MESSAGE);
         } // end of if statement
     }
 
