@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FileHandler {
@@ -27,10 +28,16 @@ public class FileHandler {
         return output;
     }
 
-    public Map<String, Map<String, Float>> readStockEntries() throws IOException {
-        String rawData = readFromFile(new Configs().STOCK_ENTRY_FILE_NAME);
-        Gson deserialized = new Gson();
-        Map<String, Map<String, Float>> map = deserialized.fromJson(rawData, Map.class);
-        return map;
+    public Map<String, Map<String, Double>> readStockEntries() {
+        Map stockMap = new HashMap<>();
+        try {
+            String rawData = readFromFile(Configs.STOCK_ENTRY_FILE_NAME);
+            Gson deserialized = new Gson();
+            stockMap = deserialized.fromJson(rawData, Map.class);
+            return stockMap;
+        }catch (Exception e){
+            System.out.println("FileHandler::readStockEntries exception occured" + e.toString());
+            return stockMap;
+        }
     }
 }

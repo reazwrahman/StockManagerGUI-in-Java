@@ -102,8 +102,8 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     }
 
     private class aboutListener implements ActionListener {
-        String message = "Pizza Ordering System GUI - Written in Java.\n" +
-                "Easily customize and order your favorite pizzas.\n" +
+        String message = "Stock Portfolio Management System\n" +
+                "Easily manage and analyze your stock performance\n" +
                 "Author: Reaz W. Rahman \n" +
                 "All Rights Reserved © 2024.";
 

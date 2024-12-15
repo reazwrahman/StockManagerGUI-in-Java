@@ -30,7 +30,8 @@ public class GUIApp {
         renderMenu();
         renderRegions();
 
-        frame.setSize(600, 400);
+        frame.setSize(500, 500);
+//        frame.pack();
         frame.setVisible(true);
     }
 
@@ -43,8 +44,18 @@ public class GUIApp {
         for (String region : componentMapper.keySet()) {
             var component = componentMapper.get(region);
             JPanel panel = component.getPanel();
-            contentPane.add(panel, region);
-            contentPane.add(panel, BorderLayout.PAGE_START);
+            JScrollPane scrollPane = new JScrollPane(panel);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            contentPane.add(scrollPane, region);
+            contentPane.add(scrollPane, BorderLayout.PAGE_START);
+        }
+    }
+
+    public void refresh(){
+        for (String region : componentMapper.keySet()) {
+            var component = componentMapper.get(region);
+            component.getPanel().revalidate();
+            component.getPanel().repaint();
         }
         contentPane.revalidate();
         contentPane.repaint();

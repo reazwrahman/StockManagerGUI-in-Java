@@ -19,21 +19,23 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int COLUMNS = 10;
     private static final int WIDTH = 70;
     private static final int HEIGHT = 26;
+    private static final int STOCK_PANEL_STARTS_AT = 2;
+    private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
+
     private GUIApp m_app;
-    private Map<String, Map<String, Float>> m_stockMap;
+    private Map<String, Map<String, Double>> m_stockMap;
     private FileHandler m_fileHandler;
-    private Configs m_configs;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
     private JButton m_deleteButton;
     private JButton m_submitButton;
-    private JPanel m_stocksHolder;
 
     public StockEntryPanel(GUIApp app) {
         m_app = app;
         m_stockMap = new HashMap<>();
         m_fileHandler = new FileHandler();
-        m_configs = new Configs();
+
+        m_stockMap = m_fileHandler.readStockEntries();
     }
 
     @Override
@@ -53,7 +55,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_deleteButton.setActionCommand("delete");
         m_deleteButton.addActionListener(this);
 
-        m_submitButton = new JButton("Submit");
+        m_submitButton = new JButton("Save");
         m_submitButton.setActionCommand("submit");
         m_submitButton.addActionListener(this);
 
@@ -62,7 +64,8 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_buttonsPanel.add(m_submitButton);
         m_panel.add(m_buttonsPanel);
 
-        addEntryLabels();
+        addEntryLabels(); // add a panel for the columns
+        fillStockEntry();
     }
 
     private void addEntryLabels() {
@@ -94,7 +97,21 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     }
 
-    private void addStockEntry() {
+    private void fillStockEntry(){
+        for (String ticker: m_stockMap.keySet()) {
+            JPanel stockPanel = addStockEntry();
+            JTextField tickerField = (JTextField) stockPanel.getComponent(0);
+            JTextField qtyField = (JTextField) stockPanel.getComponent(2);
+            JTextField costField = (JTextField) stockPanel.getComponent(4);
+
+            tickerField.setText(ticker);
+            tickerField.setEditable(true);
+            qtyField.setText(m_stockMap.get(ticker).get("quantity").toString());
+            costField.setText(m_stockMap.get(ticker).get("totalCost").toString());
+        }
+    }
+
+    private JPanel addStockEntry() {
         JPanel stockPanel = new JPanel();
         stockPanel.setLayout(new BoxLayout(stockPanel, BoxLayout.X_AXIS));
         stockPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -127,12 +144,14 @@ public class StockEntryPanel extends AbstractGUIComponent
 
         m_panel.add(topAlignedPanel);
         m_panel.add(Box.createVerticalStrut(5));
+
+        return stockPanel;
     }
 
     private boolean deleteStockEntry() {
         java.awt.Component[] components = m_panel.getComponents();
         int length = components.length;
-        if (length > 2) { // 0: buttons, 1: labels
+        if (length > STOCK_PANEL_STARTS_AT) { // 0: buttons, 1: labels
             m_panel.remove(length - 1); // gap filler (Box$Filler)
             m_panel.remove(length - 2); // stock entry panel
             return true;
@@ -141,12 +160,12 @@ public class StockEntryPanel extends AbstractGUIComponent
     }
 
     @Override
-    public void reset(){
+    public void reset() {
         boolean panelLeft = deleteStockEntry();
         while (panelLeft) {
             panelLeft = deleteStockEntry();
         }
-        m_app.renderRegions();
+        m_app.refresh();
     }
 
     private void readEntries() {
@@ -156,10 +175,7 @@ public class StockEntryPanel extends AbstractGUIComponent
                     validationResult,
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-        else {
+        } else {
             saveEntries();
         }
     }
@@ -167,8 +183,8 @@ public class StockEntryPanel extends AbstractGUIComponent
     @Override
     public String validateInput() {
         java.awt.Component[] components = m_panel.getComponents();
-        if (components.length > 2) {
-            for (int i = 2; i < components.length; i += 2) {
+        if (components.length > STOCK_PANEL_STARTS_AT) {
+            for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
                 JPanel parentPanel = (JPanel) components[i];
                 JPanel panel = (JPanel) parentPanel.getComponent(0);
 
@@ -195,8 +211,8 @@ public class StockEntryPanel extends AbstractGUIComponent
     private void saveEntries() {
         java.awt.Component[] components = m_panel.getComponents();
 
-        if (components.length > 2) { // 0: buttons, 1: labels
-            for (int i = 2; i < components.length; i += 2) {
+        if (components.length > STOCK_PANEL_STARTS_AT) { // 0: buttons, 1: labels
+            for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
 
                 JPanel parentPanel = (JPanel) components[i];
                 JPanel panel = (JPanel) parentPanel.getComponent(0);
@@ -206,8 +222,8 @@ public class StockEntryPanel extends AbstractGUIComponent
                 JTextField costField = (JTextField) panel.getComponent(4);
 
                 String ticker = tickerField.getText();
-                Float quantity = Float.parseFloat(qtyField.getText());
-                Float cost = Float.parseFloat(costField.getText());
+                Double quantity = Double.parseDouble(qtyField.getText());
+                Double cost = Double.parseDouble(costField.getText());
 
                 insertToMap(ticker.toUpperCase(), quantity, cost);
             } // end of for loop
@@ -220,34 +236,35 @@ public class StockEntryPanel extends AbstractGUIComponent
         } // end of if statement
     }
 
-    private void insertToMap(String ticker, float quantity, float cost){
-        Map<String, Float> innerMap = new HashMap<>();
+    private void insertToMap(String ticker, double quantity, double cost) {
+        Map<String, Double> innerMap = new HashMap<>();
         if (m_stockMap.get(ticker) == null) {
             innerMap.put("quantity", quantity);
             innerMap.put("totalCost", cost);
             m_stockMap.put(ticker, innerMap);
         } else {
-            float existingQuantity = m_stockMap.get(ticker).get("quantity");
-            float existingCost = m_stockMap.get(ticker).get("totalCost");
-            innerMap.put("quantity", quantity+existingQuantity);
-            innerMap.put("totalCost", cost+existingCost);
+            double existingQuantity = m_stockMap.get(ticker).get("quantity");
+            double existingCost = m_stockMap.get(ticker).get("totalCost");
+            innerMap.put("quantity", quantity + existingQuantity);
+            innerMap.put("totalCost", cost + existingCost);
             m_stockMap.put(ticker, innerMap);
         }
     }
+
     private void writeToJson() {
         Gson gson = new Gson();
         String json = gson.toJson(m_stockMap);
-        m_fileHandler.writeToFile(m_configs.STOCK_ENTRY_FILE_NAME, json);
+        m_fileHandler.writeToFile(Configs.STOCK_ENTRY_FILE_NAME, json);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("add")) {
             this.addStockEntry();
-            m_app.renderRegions();
+            m_app.refresh();
         } else if (e.getActionCommand().equals("delete")) {
             deleteStockEntry();
-            m_app.renderRegions();
+            m_app.refresh();
         } else if (e.getActionCommand().equals("submit")) {
             readEntries();
         }
