@@ -22,5 +22,15 @@ public abstract class AbstractGUIComponent implements GUIComponentIF {
         return "";
     }
 
+    @Override
+    public Boolean enableVerticalScroll() {
+        return false;
+    }
+
+    @Override
+    public Boolean enableHorizontalScroll() {
+        return false;
+    }
+
 
 }

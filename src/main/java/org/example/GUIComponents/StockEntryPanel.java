@@ -208,6 +208,11 @@ public class StockEntryPanel extends AbstractGUIComponent
         return "";
     }
 
+    @Override
+    public Boolean enableVerticalScroll() {
+        return true;
+    }
+
     private void saveEntries() {
         java.awt.Component[] components = m_panel.getComponents();
 
@@ -238,6 +243,12 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     private void insertToMap(String ticker, double quantity, double cost) {
         Map<String, Double> innerMap = new HashMap<>();
+        if (quantity == 0 && cost == 0) { // remove this stock if applicable, or don't enter at all
+            if (m_stockMap.get(ticker) != null) {
+                m_stockMap.remove(ticker);
+            }
+            return;
+        }
         if (m_stockMap.get(ticker) == null) {
             innerMap.put("quantity", quantity);
             innerMap.put("totalCost", cost);

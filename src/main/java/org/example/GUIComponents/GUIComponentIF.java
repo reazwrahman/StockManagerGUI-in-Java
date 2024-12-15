@@ -10,4 +10,8 @@ public interface GUIComponentIF {
     void reset();
 
     String validateInput();
+
+    Boolean enableVerticalScroll();
+
+    Boolean enableHorizontalScroll();
 }
