@@ -1,18 +1,1 @@
-{
-  "MSFT": {
-    "quantity": 356.48,
-    "totalCost": 359.9881
-  },
-  "GOOGL": {
-    "quantity": 271.56,
-    "totalCost": 51588.484
-  },
-  "AAPL": {
-    "quantity": 48.84,
-    "totalCost": 363.24243
-  },
-  "AMZN": {
-    "quantity": 348.0,
-    "totalCost": 209.33209
-  }
-}
+{"GOOGL":{"quantity":"87.123","totalCost":"89.12"},"AMZN":{"quantity":"12.12","totalCost":"90.12"},"MSFT":{"quantity":"971.2","totalCost":"124.56"}}

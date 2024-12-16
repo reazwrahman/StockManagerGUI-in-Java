@@ -29,30 +29,16 @@ public class FileHandler {
         return output;
     }
 
-    public Map<String, Map<String, Float>> readStockEntries() {
-        Map<String, Map<String, Double>> stockMap = new HashMap<>();
+    public Map<String, Map<String, String>> readStockEntries() {
+        Map<String, Map<String, String>> stockMap = new HashMap<>();
         try {
             String rawData = readFromFile(Configs.STOCK_ENTRY_FILE_NAME);
             Gson deserialized = new Gson();
             stockMap = deserialized.fromJson(rawData, Map.class);
-            return castToFloat(stockMap);
+            return stockMap;
         }catch (Exception e){
             System.out.println("FileHandler::readStockEntries exception occured" + e.toString());
-            Map<String, Map<String, Float>> emptyMap = new HashMap<>();
-            return emptyMap;
+            return stockMap;
         }
-    }
-
-    private Map<String, Map<String, Float>> castToFloat(Map<String, Map<String, Double>> doubleMap){
-        Map<String, Map<String, Float>> floatMap = new HashMap<>();
-        for (String ticker: doubleMap.keySet()) {
-            Float quantity = doubleMap.get(ticker).get("quantity").floatValue();
-            Float cost = doubleMap.get(ticker).get("totalCost").floatValue();
-            Map<String, Float> innerMap = new HashMap<>();
-            innerMap.put("quantity", quantity);
-            innerMap.put("totalCost", cost);
-            floatMap.put(ticker, innerMap);
-        }
-        return floatMap;
     }
 }

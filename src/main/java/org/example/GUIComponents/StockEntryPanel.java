@@ -10,7 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 public class StockEntryPanel extends AbstractGUIComponent
@@ -23,7 +25,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
 
     private GUIApp m_app;
-    private Map<String, Map<String, Float>> m_stockMap;
+    private Map<String, Map<String, String>> m_stockMap;
     private FileHandler m_fileHandler;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
@@ -183,6 +185,8 @@ public class StockEntryPanel extends AbstractGUIComponent
     @Override
     public String validateInput() {
         java.awt.Component[] components = m_panel.getComponents();
+        Set<String> stockSeen = new HashSet<>();
+
         if (components.length > STOCK_PANEL_STARTS_AT) {
             for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
                 JPanel parentPanel = (JPanel) components[i];
@@ -195,6 +199,13 @@ public class StockEntryPanel extends AbstractGUIComponent
                 if (tickerField.getText().isBlank() || qtyField.getText().isBlank() || costField.getText().isBlank()) {
                     return "Stock entries can not be empty";
                 }
+
+                String ticker = tickerField.getText().strip().toUpperCase();
+
+                if (stockSeen.contains(ticker)) {
+                    return "Duplicate Stock not allowed: " + ticker;
+                }
+                stockSeen.add(ticker);
 
                 try {
                     Float quantity = Float.parseFloat(qtyField.getText());
@@ -227,8 +238,8 @@ public class StockEntryPanel extends AbstractGUIComponent
                 JTextField costField = (JTextField) panel.getComponent(4);
 
                 String ticker = tickerField.getText();
-                Float quantity = Float.parseFloat(qtyField.getText());
-                Float cost = Float.parseFloat(costField.getText());
+                String quantity = qtyField.getText().strip();
+                String cost = costField.getText().strip();
 
                 insertToMap(ticker.toUpperCase(), quantity, cost);
             } // end of for loop
@@ -241,25 +252,17 @@ public class StockEntryPanel extends AbstractGUIComponent
         } // end of if statement
     }
 
-    private void insertToMap(String ticker, Float quantity, Float cost) {
-        Map<String, Float> innerMap = new HashMap<>();
-        if (quantity == 0 && cost == 0) { // remove this stock if applicable, or don't enter at all
+    private void insertToMap(String ticker, String quantity, String cost) {
+        Map<String, String> innerMap = new HashMap<>();
+        if (Float.parseFloat(quantity) == 0 && Float.parseFloat(cost) == 0) { // remove this stock if applicable, or don't enter at all
             if (m_stockMap.get(ticker) != null) {
                 m_stockMap.remove(ticker);
             }
             return;
         }
-        if (m_stockMap.get(ticker) == null) {
-            innerMap.put("quantity", quantity);
-            innerMap.put("totalCost", cost);
-            m_stockMap.put(ticker, innerMap);
-        } else {
-            Float existingQuantity = m_stockMap.get(ticker).get("quantity");
-            Float existingCost = m_stockMap.get(ticker).get("totalCost");
-            innerMap.put("quantity", quantity + existingQuantity);
-            innerMap.put("totalCost", cost + existingCost);
-            m_stockMap.put(ticker, innerMap);
-        }
+        innerMap.put("quantity", quantity);
+        innerMap.put("totalCost", cost);
+        m_stockMap.put(ticker, innerMap);
     }
 
     private void writeToJson() {
