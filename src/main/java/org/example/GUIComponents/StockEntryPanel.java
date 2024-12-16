@@ -216,6 +216,9 @@ public class StockEntryPanel extends AbstractGUIComponent
 
             }
         }
+        if (stockSeen.size() == 0) {
+            return "Nothing to save, add a stock by clicking the Add button";
+        }
         return "";
     }
 
