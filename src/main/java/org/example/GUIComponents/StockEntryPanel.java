@@ -43,7 +43,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         // setup main panel
         m_panel = new JPanel();
         m_panel.setLayout(new BoxLayout(m_panel, BoxLayout.Y_AXIS));
-        m_panel.setBorder(BorderFactory.createEmptyBorder(3, 40, 3, 20));
+        m_panel.setBorder(BorderFactory.createTitledBorder("View/Edit Current Stocks:"));
 
         // setup button panel
         m_buttonsPanel = new JPanel();

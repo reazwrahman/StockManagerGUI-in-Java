@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.GUIComponents.GUIComponentIF;
 import org.example.GUIComponents.GUIMenu;
+import org.example.GUIComponents.ImagePanel;
 import org.example.GUIComponents.StockEntryPanel;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class GUIApp {
     private Container contentPane;
 
     public GUIApp() {
+        componentMapper.put(BorderLayout.NORTH, new ImagePanel());
         componentMapper.put(BorderLayout.CENTER, new StockEntryPanel(this));
     }
 
@@ -30,7 +32,7 @@ public class GUIApp {
         renderMenu();
         renderRegions();
 
-        frame.setSize(500, 500);
+        frame.setSize(800, 800);
         frame.setVisible(true);
     }
 
