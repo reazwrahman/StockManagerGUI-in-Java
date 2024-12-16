@@ -1,14 +1,15 @@
 package org.example.Uitility;
 
 import com.google.gson.Gson;
-import org.example.Configs;
-
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.example.Configs;
 
 public class FileHandler {
 
@@ -28,16 +29,30 @@ public class FileHandler {
         return output;
     }
 
-    public Map<String, Map<String, Double>> readStockEntries() {
-        Map stockMap = new HashMap<>();
+    public Map<String, Map<String, Float>> readStockEntries() {
+        Map<String, Map<String, Double>> stockMap = new HashMap<>();
         try {
             String rawData = readFromFile(Configs.STOCK_ENTRY_FILE_NAME);
             Gson deserialized = new Gson();
             stockMap = deserialized.fromJson(rawData, Map.class);
-            return stockMap;
+            return castToFloat(stockMap);
         }catch (Exception e){
             System.out.println("FileHandler::readStockEntries exception occured" + e.toString());
-            return stockMap;
+            Map<String, Map<String, Float>> emptyMap = new HashMap<>();
+            return emptyMap;
         }
+    }
+
+    private Map<String, Map<String, Float>> castToFloat(Map<String, Map<String, Double>> doubleMap){
+        Map<String, Map<String, Float>> floatMap = new HashMap<>();
+        for (String ticker: doubleMap.keySet()) {
+            Float quantity = doubleMap.get(ticker).get("quantity").floatValue();
+            Float cost = doubleMap.get(ticker).get("totalCost").floatValue();
+            Map<String, Float> innerMap = new HashMap<>();
+            innerMap.put("quantity", quantity);
+            innerMap.put("totalCost", cost);
+            floatMap.put(ticker, innerMap);
+        }
+        return floatMap;
     }
 }

@@ -1,1 +1,18 @@
-{"AAPL":{"quantity":116239.36,"totalCost":1255951.36},"COF":{"quantity":768.0,"totalCost":5767.68},"ABCD":{"quantity":6277.85072,"totalCost":3.14301792E7},"EHG":{"quantity":1440.0,"totalCost":1249.92},"JPLA":{"quantity":1393.92,"totalCost":1.581939397136E7}}
+{
+  "MSFT": {
+    "quantity": 356.48,
+    "totalCost": 359.9881
+  },
+  "GOOGL": {
+    "quantity": 271.56,
+    "totalCost": 51588.484
+  },
+  "AAPL": {
+    "quantity": 48.84,
+    "totalCost": 363.24243
+  },
+  "AMZN": {
+    "quantity": 348.0,
+    "totalCost": 209.33209
+  }
+}

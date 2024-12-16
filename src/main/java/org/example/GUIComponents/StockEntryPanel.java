@@ -23,7 +23,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
 
     private GUIApp m_app;
-    private Map<String, Map<String, Double>> m_stockMap;
+    private Map<String, Map<String, Float>> m_stockMap;
     private FileHandler m_fileHandler;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
@@ -227,8 +227,8 @@ public class StockEntryPanel extends AbstractGUIComponent
                 JTextField costField = (JTextField) panel.getComponent(4);
 
                 String ticker = tickerField.getText();
-                Double quantity = Double.parseDouble(qtyField.getText());
-                Double cost = Double.parseDouble(costField.getText());
+                Float quantity = Float.parseFloat(qtyField.getText());
+                Float cost = Float.parseFloat(costField.getText());
 
                 insertToMap(ticker.toUpperCase(), quantity, cost);
             } // end of for loop
@@ -241,8 +241,8 @@ public class StockEntryPanel extends AbstractGUIComponent
         } // end of if statement
     }
 
-    private void insertToMap(String ticker, double quantity, double cost) {
-        Map<String, Double> innerMap = new HashMap<>();
+    private void insertToMap(String ticker, Float quantity, Float cost) {
+        Map<String, Float> innerMap = new HashMap<>();
         if (quantity == 0 && cost == 0) { // remove this stock if applicable, or don't enter at all
             if (m_stockMap.get(ticker) != null) {
                 m_stockMap.remove(ticker);
@@ -254,8 +254,8 @@ public class StockEntryPanel extends AbstractGUIComponent
             innerMap.put("totalCost", cost);
             m_stockMap.put(ticker, innerMap);
         } else {
-            double existingQuantity = m_stockMap.get(ticker).get("quantity");
-            double existingCost = m_stockMap.get(ticker).get("totalCost");
+            Float existingQuantity = m_stockMap.get(ticker).get("quantity");
+            Float existingCost = m_stockMap.get(ticker).get("totalCost");
             innerMap.put("quantity", quantity + existingQuantity);
             innerMap.put("totalCost", cost + existingCost);
             m_stockMap.put(ticker, innerMap);
