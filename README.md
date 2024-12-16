@@ -1,4 +1,4 @@
-A GUI written in Java to manage easily edit and store stock portfolio. 
+A GUI written in Java to easily manage and analyze a stock portfolio. 
 
 Future work will include another backend component responsible for analyzing the portfolio. 
 
