@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.GUIComponents.GUIComponentIF;
-import org.example.GUIComponents.GUIMenu;
-import org.example.GUIComponents.ImagePanel;
-import org.example.GUIComponents.StockEntryPanel;
+import org.example.GUIComponents.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +18,7 @@ public class GUIApp {
     public GUIApp() {
         componentMapper.put(BorderLayout.NORTH, new ImagePanel());
         componentMapper.put(BorderLayout.CENTER, new StockEntryPanel(this));
+        componentMapper.put(BorderLayout.SOUTH, new StockEntryInstruction());
     }
 
     public void start() {
