@@ -17,7 +17,7 @@ public class StockEntryInstruction extends AbstractGUIComponent
                         "4) From the 'View' menu, select 'Reload' to repopulate the panel with saved data." +
                         "</html>";
         JLabel label = new JLabel(instructions, JLabel.CENTER);
-        m_panel.setPreferredSize(new Dimension(100, 100));
+        m_panel.setPreferredSize(new Dimension(100, 80));
         m_panel.add(label);
     }
 }

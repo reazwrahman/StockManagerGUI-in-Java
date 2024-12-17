@@ -46,11 +46,13 @@ public class GUIApp {
             if (component.enableVerticalScroll()) {
                 JScrollPane scrollPane = new JScrollPane(panel);
                 scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
                 contentPane.add(scrollPane, region);
             }
             else {
                 contentPane.add(panel, region);
             }
+
         }
     }
 
