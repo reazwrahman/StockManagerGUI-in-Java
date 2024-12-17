@@ -1,5 +1,6 @@
 package org.example.GUIComponents;
 
+import org.example.GUIApp;
 import org.example.Uitility.FileHandler;
 
 import javax.swing.*;
@@ -78,10 +79,10 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
         menuItem.addActionListener(new newListener());
 
-//        menuItem = new JMenuItem("Save Order");
-//        viewMenu.add(menuItem);
-//        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
-//        menuItem.addActionListener(new saveListener());
+        menuItem = new JMenuItem("Reload Data");
+        viewMenu.add(menuItem);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, Event.CTRL_MASK));
+        menuItem.addActionListener(new reloadListener());
 
 
         menuItem = new JMenuItem("Exit");
@@ -123,20 +124,12 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         }
     }
 
-    private class saveListener implements ActionListener {
-
+    private class reloadListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String errorMessage = validateInput();
-            if (errorMessage.isEmpty()) { // valid inputs
-                String order = "";
-                JOptionPane.showMessageDialog(frame,
-                        order,
-                        "Order Saved",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                fileHandler.writeToFile("PizzaOrder.txt", order);
-            }
+            StockEntryPanel stockPanel = (StockEntryPanel) componentMapper.get(BorderLayout.CENTER);
+            stockPanel.reset();
+            stockPanel.fillStockEntry();
         }
     }
 }
