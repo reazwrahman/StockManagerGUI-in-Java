@@ -233,7 +233,7 @@ public class StockEntryPanel extends AbstractGUIComponent
 
             }
         }
-        if (stockSeen.size() == 0) {
+        if (stockSeen.isEmpty()) {
             return "Nothing to save, add a stock by clicking the Add button";
         }
         return "";
@@ -293,7 +293,8 @@ public class StockEntryPanel extends AbstractGUIComponent
     }
 
     private void updateAnalysisTab(){
-        m_app.componentMapper.get(BorderLayout.EAST).render();
+        AnalysisDisplay temp= (AnalysisDisplay) m_app.componentMapper.get(BorderLayout.EAST);
+        temp.updatePanel();
         m_app.refresh();
     }
 
