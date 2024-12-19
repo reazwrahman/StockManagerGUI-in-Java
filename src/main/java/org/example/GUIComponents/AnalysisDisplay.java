@@ -28,15 +28,17 @@ public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponen
         m_textArea.setWrapStyleWord(true);
         m_textArea.setEditable(false);
 
-        JScrollPane scrollPane = new JScrollPane(m_textArea);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-
         m_panel.removeAll(); // Remove any existing components
-        m_panel.add(scrollPane, BorderLayout.CENTER);
+        m_panel.add(m_textArea, BorderLayout.CENTER);
         m_panel.revalidate(); // Ensures the layout is recalculated
         m_panel.repaint();
     }
+
+    @Override
+    public Boolean enableVerticalScroll(){return true;}
+
+    @Override
+    public Boolean enableHorizontalScroll(){return true;}
 
     public void updatePanel(){
         m_stockSorter.updateData();

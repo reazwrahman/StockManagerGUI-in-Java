@@ -25,4 +25,10 @@ public class StockEntryInstruction extends AbstractGUIComponent
         m_panel.setPreferredSize(new Dimension(100, 90));
         m_panel.add(label);
     }
+
+    @Override
+    public Boolean enableVerticalScroll(){return true;}
+
+    @Override
+    public Boolean enableHorizontalScroll(){return true;}
 }
