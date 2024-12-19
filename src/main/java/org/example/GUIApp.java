@@ -87,8 +87,6 @@ public class GUIApp {
             for (String subRegion : componentMapper.get(region).keySet()) {
                 var component = componentMapper.get(region).get(subRegion);
                 component.updatePanel();
-//                component.getPanel().revalidate();
-//                component.getPanel().repaint();
             }
         }
         contentPane.revalidate();
