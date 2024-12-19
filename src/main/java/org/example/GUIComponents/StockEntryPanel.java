@@ -292,11 +292,6 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_fileHandler.writeToFile(Configs.STOCK_ENTRY_FILE_NAME, json);
     }
 
-    private void updateAnalysisTab(){
-
-        m_app.refresh();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("add")) {

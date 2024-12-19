@@ -4,26 +4,33 @@ import org.example.GUIComponents.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class GUIApp {
+    private static final String REGIONAL_KEY = "Regional";
+    private static final String TABBED_KEY = "Tabbed";
 
     public JFrame frame;
+    public JTabbedPane mainTab = new JTabbedPane();
+    public Map<String, Map<String, GUIComponentIF>> componentMapper = new HashMap<>();
     // custom GUI components
     GUIMenu menuComponent;
-    public Map<String, GUIComponentIF> componentMapper = new HashMap<>();
     private Container contentPane;
-    private Set<String> m_regionRendered;
+    private final Set<String> m_regionRendered;
 
     public GUIApp() {
-        componentMapper.put(BorderLayout.NORTH, new ImagePanel());
-        componentMapper.put(BorderLayout.CENTER, new StockEntryPanel(this));
-        componentMapper.put(BorderLayout.SOUTH, new StockEntryInstruction());
-        componentMapper.put(BorderLayout.EAST, new AnalysisDisplay());
+        Map<String, GUIComponentIF> regionalMap = new HashMap<>();
+        regionalMap.put(BorderLayout.NORTH, new ImagePanel());
+        componentMapper.put(REGIONAL_KEY, regionalMap);
+
+        Map<String, GUIComponentIF> tabbedMap = new HashMap<>();
+        tabbedMap.put("Enter Stock", new StockEntryPanel(this));
+        regionalMap.put("Analysis", new AnalysisDisplay());
+        regionalMap.put("Instructions", new StockEntryInstruction());
+        componentMapper.put(TABBED_KEY, tabbedMap);
 
         m_regionRendered = new HashSet<>();
     }
@@ -32,6 +39,7 @@ public class GUIApp {
         frame = new JFrame("Portfolio Analyzer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         contentPane = frame.getContentPane();
+        mainTab = new JTabbedPane();
 
         // set ui components
         renderMenu();
@@ -47,54 +55,51 @@ public class GUIApp {
         menuComponent.render();
     }
 
-    private void renderTab(){
-        JTabbedPane tabby = new JTabbedPane();
-
-        JScrollPane scrollPane = new JScrollPane(componentMapper.get(BorderLayout.CENTER).getPanel());
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-        tabby.addTab("Enter Stock", scrollPane);
-
-
-        tabby.addTab("Analysis", componentMapper.get(BorderLayout.EAST).getPanel());
-        tabby.addTab("Instructions", componentMapper.get(BorderLayout.SOUTH).getPanel());
-
-        tabby.setMnemonicAt(0, KeyEvent.VK_E);
-        contentPane.add(tabby);
-
-        m_regionRendered.add(BorderLayout.CENTER);
-        m_regionRendered.add(BorderLayout.SOUTH);
-        m_regionRendered.add(BorderLayout.EAST);
+    private void renderTab() {
+        for (String tabTitle : componentMapper.get(TABBED_KEY).keySet()) {
+            GUIComponentIF component = componentMapper.get(TABBED_KEY).get(tabTitle);
+            if (component.enableVerticalScroll()) {
+                mainTab.add(tabTitle, addScrollPane(component.getPanel()));
+            } else {
+                mainTab.addTab("Enter Stock", component.getPanel());
+            }
+        }
     }
 
     public void renderRegions() {
-
-        for (String region : componentMapper.keySet()) {
-            if (!m_regionRendered.contains(region)) {
-                var component = componentMapper.get(region);
-                JPanel panel = component.getPanel();
-                if (component.enableVerticalScroll()) {
-                    JScrollPane scrollPane = new JScrollPane(panel);
-                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                    scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-                    contentPane.add(scrollPane, region);
-                } else {
-                    contentPane.add(panel, region);
-                }
+        for (String region : componentMapper.get(REGIONAL_KEY).keySet()) {
+            var component = componentMapper.get(REGIONAL_KEY).get(region);
+            JPanel panel = component.getPanel();
+            if (component.enableVerticalScroll()) {
+                contentPane.add(addScrollPane(panel), region);
+            } else {
+                contentPane.add(panel, region);
             }
-
         }
     }
 
-    public void refresh(){
+    public void refresh() {
         for (String region : componentMapper.keySet()) {
-            var component = componentMapper.get(region);
-            component.updatePanel();
-            component.getPanel().revalidate();
-            component.getPanel().repaint();
+            for (String subRegion : componentMapper.get(region).keySet()) {
+                var component = componentMapper.get(region).get(subRegion);
+                component.updatePanel();
+                component.getPanel().revalidate();
+                component.getPanel().repaint();
+            }
         }
         contentPane.revalidate();
         contentPane.repaint();
+    }
+
+    // -------------------------------------------------------------------//
+    // -------------------- helper methods  ------------------------------//
+    // -------------------------------------------------------------------//
+    private JScrollPane addScrollPane(JPanel panel){
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+        return scrollPane;
     }
 
 }
