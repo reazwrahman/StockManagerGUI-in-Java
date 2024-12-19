@@ -33,6 +33,9 @@ public abstract class AbstractGUIComponent implements GUIComponentIF {
     }
 
     @Override
-    public void updatePanel(){};
+    public void updatePanel() {
+    }
+
+    ;
 
 }

@@ -1,15 +1,14 @@
 package org.example.Uitility;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import org.example.Configs;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.example.Configs;
 
 public class FileHandler {
 
@@ -36,7 +35,7 @@ public class FileHandler {
             Gson deserialized = new Gson();
             stockMap = deserialized.fromJson(rawData, Map.class);
             return stockMap;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("FileHandler::readStockEntries exception occured" + e.toString());
             return stockMap;
         }

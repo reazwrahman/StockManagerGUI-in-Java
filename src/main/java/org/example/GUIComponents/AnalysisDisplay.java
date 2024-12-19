@@ -5,17 +5,17 @@ import org.example.StockManager.StockSorter;
 import javax.swing.*;
 import java.awt.*;
 
-public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponentIF{
+public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponentIF {
 
     JTextArea m_textArea;
     StockSorter m_stockSorter;
 
-    public AnalysisDisplay(){
+    public AnalysisDisplay() {
         m_stockSorter = new StockSorter();
     }
 
     @Override
-    public void render(){
+    public void render() {
         m_panel = new JPanel();
         m_panel.setLayout(new BorderLayout());
         m_textArea = new JTextArea(10, 30);
@@ -34,12 +34,16 @@ public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponen
     }
 
     @Override
-    public Boolean enableVerticalScroll(){return true;}
+    public Boolean enableVerticalScroll() {
+        return true;
+    }
 
     @Override
-    public Boolean enableHorizontalScroll(){return true;}
+    public Boolean enableHorizontalScroll() {
+        return true;
+    }
 
-    public void updatePanel(){
+    public void updatePanel() {
         m_stockSorter.updateData();
         m_textArea.setText(m_stockSorter.toString());
         JScrollPane scrollPane = new JScrollPane(m_textArea);

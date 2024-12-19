@@ -116,8 +116,8 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     }
 
-    public void fillStockEntry(){
-        for (String ticker: m_stockMap.keySet()) {
+    public void fillStockEntry() {
+        for (String ticker : m_stockMap.keySet()) {
             JPanel stockPanel = addStockEntry();
             JTextField tickerField = (JTextField) stockPanel.getComponent(0);
             JTextField qtyField = (JTextField) stockPanel.getComponent(2);
@@ -250,7 +250,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     }
 
     @Override
-    public void updatePanel(){
+    public void updatePanel() {
         m_panel.revalidate();
         m_panel.repaint();
     }

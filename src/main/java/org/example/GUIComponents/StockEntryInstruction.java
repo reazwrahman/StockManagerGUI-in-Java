@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StockEntryInstruction extends AbstractGUIComponent
-        implements GUIComponentIF{
+        implements GUIComponentIF {
 
     @Override
     public void render() {
@@ -27,8 +27,12 @@ public class StockEntryInstruction extends AbstractGUIComponent
     }
 
     @Override
-    public Boolean enableVerticalScroll(){return true;}
+    public Boolean enableVerticalScroll() {
+        return true;
+    }
 
     @Override
-    public Boolean enableHorizontalScroll(){return true;}
+    public Boolean enableHorizontalScroll() {
+        return true;
+    }
 }
