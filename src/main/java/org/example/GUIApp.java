@@ -48,7 +48,7 @@ public class GUIApp {
         renderTab();
         renderRegions();
 
-        frame.setSize(800, 800);
+        frame.setSize(800, 700);
         frame.setVisible(true);
     }
 

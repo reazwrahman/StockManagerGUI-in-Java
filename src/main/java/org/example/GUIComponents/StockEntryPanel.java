@@ -313,6 +313,8 @@ public class StockEntryPanel extends AbstractGUIComponent
             m_app.refresh();
         } else if (e.getActionCommand().equals("submit")) {
             readEntries();
+            reset();
+            fillStockEntry();
             m_app.refresh();
         }
     }
