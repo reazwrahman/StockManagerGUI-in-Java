@@ -3,6 +3,7 @@ package org.example.GUIComponents;
 import com.google.gson.Gson;
 import org.example.Configs;
 import org.example.GUIApp;
+import org.example.StockManager.StockSorter;
 import org.example.Uitility.FileHandler;
 
 import javax.swing.*;
@@ -27,6 +28,8 @@ public class StockEntryPanel extends AbstractGUIComponent
     private GUIApp m_app;
     private Map<String, Map<String, String>> m_stockMap;
     private FileHandler m_fileHandler;
+    private StockSorter m_stockSorter;
+
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
     private JButton m_deleteButton;
@@ -38,6 +41,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_fileHandler = new FileHandler();
 
         m_stockMap = m_fileHandler.readStockEntries();
+        m_stockSorter = new StockSorter();
     }
 
     @Override
@@ -284,6 +288,9 @@ public class StockEntryPanel extends AbstractGUIComponent
             m_app.refresh();
         } else if (e.getActionCommand().equals("submit")) {
             readEntries();
+            m_stockSorter.updateData();
+
+
         }
     }
 }
