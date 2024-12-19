@@ -10,8 +10,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class GUIApp {
-    private static final String REGIONAL_KEY = "Regional";
-    private static final String TABBED_KEY = "Tabbed";
+    public static final String REGIONAL_KEY = "Regional";
+    public static final String TABBED_KEY = "Tabbed";
+    public static final String ENTER_STOCK_TAB = "Enter Stock";
+    public static final String ANALYSIS_TAB = "Analysis";
+    public static final String INSTRUCTIONS_TAB = "Instructions";
 
     public JFrame frame;
     public JTabbedPane mainTab = new JTabbedPane();
@@ -27,9 +30,9 @@ public class GUIApp {
         componentMapper.put(REGIONAL_KEY, regionalMap);
 
         Map<String, GUIComponentIF> tabbedMap = new HashMap<>();
-        tabbedMap.put("Enter Stock", new StockEntryPanel(this));
-        regionalMap.put("Analysis", new AnalysisDisplay());
-        regionalMap.put("Instructions", new StockEntryInstruction());
+        tabbedMap.put(ENTER_STOCK_TAB, new StockEntryPanel(this));
+        tabbedMap.put(ANALYSIS_TAB, new AnalysisDisplay());
+        tabbedMap.put(INSTRUCTIONS_TAB, new StockEntryInstruction());
         componentMapper.put(TABBED_KEY, tabbedMap);
 
         m_regionRendered = new HashSet<>();
@@ -56,14 +59,16 @@ public class GUIApp {
     }
 
     private void renderTab() {
-        for (String tabTitle : componentMapper.get(TABBED_KEY).keySet()) {
+        String[] orderedTabs = {ENTER_STOCK_TAB, ANALYSIS_TAB, INSTRUCTIONS_TAB};
+        for (String tabTitle : orderedTabs) {
             GUIComponentIF component = componentMapper.get(TABBED_KEY).get(tabTitle);
             if (component.enableVerticalScroll()) {
                 mainTab.add(tabTitle, addScrollPane(component.getPanel()));
             } else {
-                mainTab.addTab("Enter Stock", component.getPanel());
+                mainTab.addTab(tabTitle, component.getPanel());
             }
         }
+        contentPane.add(mainTab);
     }
 
     public void renderRegions() {
@@ -94,12 +99,17 @@ public class GUIApp {
     // -------------------------------------------------------------------//
     // -------------------- helper methods  ------------------------------//
     // -------------------------------------------------------------------//
-    private JScrollPane addScrollPane(JPanel panel){
-        JScrollPane scrollPane = new JScrollPane(panel);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-        return scrollPane;
+    private JScrollPane addScrollPaneIfNeeded(JPanel panel, boolean vertical, boolean horizontal){
+        if (vertical || horizontal) {
+            JScrollPane scrollPane = new JScrollPane(panel);
+            if (vertical) {
+                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            } else if (horizontal) {
+                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            }
+            scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+            return scrollPane;
+        }
     }
 
 }
