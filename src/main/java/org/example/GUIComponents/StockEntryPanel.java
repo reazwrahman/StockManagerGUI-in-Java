@@ -244,6 +244,17 @@ public class StockEntryPanel extends AbstractGUIComponent
         return true;
     }
 
+    @Override
+    public Boolean enableHorizontalScroll() {
+        return true;
+    }
+
+    @Override
+    public void updatePanel(){
+        m_panel.revalidate();
+        m_panel.repaint();
+    }
+
     private void saveEntries() {
         java.awt.Component[] components = m_panel.getComponents();
         m_stockMap = new HashMap<>();
