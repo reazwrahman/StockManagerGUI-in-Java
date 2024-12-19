@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class StockEntryPanel extends AbstractGUIComponent
 
         m_submitButton = new JButton("Save");
         m_submitButton.setActionCommand("submit");
+        m_submitButton.setMnemonic(KeyEvent.VK_S);
         m_submitButton.addActionListener(this);
 
         m_buttonsPanel.add(m_addButton);
@@ -277,6 +279,8 @@ public class StockEntryPanel extends AbstractGUIComponent
             } // end of for loop
 
             writeToJson();
+            reset();
+            fillStockEntry();
             JOptionPane.showMessageDialog(m_app.frame,
                     "Data Submitted",
                     "Submitted",
@@ -313,8 +317,6 @@ public class StockEntryPanel extends AbstractGUIComponent
             m_app.refresh();
         } else if (e.getActionCommand().equals("submit")) {
             readEntries();
-            reset();
-            fillStockEntry();
             m_app.refresh();
         }
     }
