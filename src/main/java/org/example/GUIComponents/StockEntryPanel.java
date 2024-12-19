@@ -44,6 +44,19 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_stockSorter = new StockSorter();
     }
 
+//    @Override
+//    public JPanel getPanel(){
+//        JScrollPane scrollPane = new JScrollPane(m_panel);
+//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+//
+//        JPanel panel = new JPanel();
+//        panel.add(scrollPane, BorderLayout.CENTER);
+//        panel.revalidate();
+//        panel.repaint();
+//        return panel;
+//    }
+
     @Override
     public void render() {
         // setup main panel
@@ -233,6 +246,7 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     private void saveEntries() {
         java.awt.Component[] components = m_panel.getComponents();
+        m_stockMap = new HashMap<>();
 
         if (components.length > STOCK_PANEL_STARTS_AT) { // 0: buttons, 1: labels
             for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
@@ -278,6 +292,11 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_fileHandler.writeToFile(Configs.STOCK_ENTRY_FILE_NAME, json);
     }
 
+    private void updateAnalysisTab(){
+        m_app.componentMapper.get(BorderLayout.EAST).render();
+        m_app.refresh();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("add")) {
@@ -288,9 +307,7 @@ public class StockEntryPanel extends AbstractGUIComponent
             m_app.refresh();
         } else if (e.getActionCommand().equals("submit")) {
             readEntries();
-            m_stockSorter.updateData();
-
-
+            updateAnalysisTab();
         }
     }
 }

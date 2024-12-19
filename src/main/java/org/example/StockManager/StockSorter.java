@@ -44,6 +44,7 @@ public class StockSorter {
         builder.append("=================================================\n");
 
         // Header row
+        builder.append("\n");
         builder.append(String.format("%-4s %-15s %-15s %-15s\n", " ", "Ticker", "Quantity", "TotalCost"));
 
         // Separator
@@ -52,7 +53,11 @@ public class StockSorter {
         // Data rows
         for (int i = m_sortedData.size()-1; i >= 0; i--) {
             Stock stock = m_sortedData.get(i);
-            builder.append(String.format("%-4d %-15s %-15.2f %-15.2f\n", i + 1, stock.m_ticker, stock.m_quantity, stock.m_totalCost));
+            builder.append(String.format("%-4d %-15s %-15s %-15s\n",
+                    (m_sortedData.size() - i),
+                    stock.m_ticker,
+                    String.format("%.2f", stock.m_quantity),
+                    String.format("%.2f", stock.m_totalCost)));
         }
 
         return builder.toString();
