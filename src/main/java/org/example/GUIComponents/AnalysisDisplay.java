@@ -22,7 +22,6 @@ public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponen
         m_textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
 
         m_stockSorter.updateData();
-        //System.out.println(m_stockSorter.toString());
         m_textArea.setText(m_stockSorter.toString());
         m_textArea.setLineWrap(true);
         m_textArea.setWrapStyleWord(true);
