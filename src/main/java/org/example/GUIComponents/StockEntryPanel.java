@@ -293,8 +293,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     }
 
     private void updateAnalysisTab(){
-        AnalysisDisplay temp= (AnalysisDisplay) m_app.componentMapper.get(BorderLayout.EAST);
-        temp.updatePanel();
+
         m_app.refresh();
     }
 
@@ -308,7 +307,7 @@ public class StockEntryPanel extends AbstractGUIComponent
             m_app.refresh();
         } else if (e.getActionCommand().equals("submit")) {
             readEntries();
-            updateAnalysisTab();
+            m_app.refresh();
         }
     }
 }

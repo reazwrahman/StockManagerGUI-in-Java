@@ -32,5 +32,7 @@ public abstract class AbstractGUIComponent implements GUIComponentIF {
         return false;
     }
 
+    @Override
+    public void updatePanel(){};
 
 }

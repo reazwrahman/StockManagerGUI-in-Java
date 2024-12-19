@@ -89,6 +89,7 @@ public class GUIApp {
     public void refresh(){
         for (String region : componentMapper.keySet()) {
             var component = componentMapper.get(region);
+            component.updatePanel();
             component.getPanel().revalidate();
             component.getPanel().repaint();
         }

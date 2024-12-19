@@ -14,4 +14,6 @@ public interface GUIComponentIF {
     Boolean enableVerticalScroll();
 
     Boolean enableHorizontalScroll();
+
+    void updatePanel();
 }
