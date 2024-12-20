@@ -261,7 +261,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         java.awt.Component[] components = m_panel.getComponents();
         m_stockMap = new HashMap<>();
 
-        if (components.length > STOCK_PANEL_STARTS_AT) { // 0: buttons, 1: labels
+        if (components.length > STOCK_PANEL_STARTS_AT) { 
             for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
 
                 JPanel parentPanel = (JPanel) components[i];
