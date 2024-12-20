@@ -45,19 +45,6 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_stockSorter = new StockSorter();
     }
 
-//    @Override
-//    public JPanel getPanel(){
-//        JScrollPane scrollPane = new JScrollPane(m_panel);
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
-//
-//        JPanel panel = new JPanel();
-//        panel.add(scrollPane, BorderLayout.CENTER);
-//        panel.revalidate();
-//        panel.repaint();
-//        return panel;
-//    }
-
     @Override
     public void render() {
         // setup main panel
