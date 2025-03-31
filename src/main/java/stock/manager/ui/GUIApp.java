@@ -1,6 +1,8 @@
-package org.example;
+package stock.manager.ui;
 
-import org.example.GUIComponents.*;
+import stock.manager.ui.components_factory.*;
+import stock.manager.ui.components_factory.ComponentEnums;
+import stock.manager.ui.components_factory.SimpleFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class GUIApp {
     public static final String ENTER_STOCK_TAB = "Enter Stock";
     public static final String ANALYSIS_TAB = "Analysis";
     public static final String INSTRUCTIONS_TAB = "Instructions";
+    SimpleFactory m_componentFactory;
     private final Set<String> m_regionRendered;
     public JFrame frame;
     public JTabbedPane mainTab = new JTabbedPane();
@@ -24,14 +27,18 @@ public class GUIApp {
     private Container contentPane;
 
     public GUIApp() {
+        // factory code (WIP)
+        m_componentFactory = SimpleFactory.getFactoryInstance();
+
+
         Map<String, GUIComponentIF> regionalMap = new HashMap<>();
-        regionalMap.put(BorderLayout.NORTH, new ImagePanel());
+        regionalMap.put(BorderLayout.NORTH, m_componentFactory.getComponent(ComponentEnums.IMAGE_PANEL));
         componentMapper.put(REGIONAL_KEY, regionalMap);
 
         Map<String, GUIComponentIF> tabbedMap = new HashMap<>();
         tabbedMap.put(ENTER_STOCK_TAB, new StockEntryPanel(this));
-        tabbedMap.put(ANALYSIS_TAB, new AnalysisDisplay());
-        tabbedMap.put(INSTRUCTIONS_TAB, new StockEntryInstruction());
+        tabbedMap.put(ANALYSIS_TAB, m_componentFactory.getComponent(ComponentEnums.ANALYSIS_DISPLAY));
+        tabbedMap.put(INSTRUCTIONS_TAB, m_componentFactory.getComponent(ComponentEnums.INSTRUCTION_PANEL));
         componentMapper.put(TABBED_KEY, tabbedMap);
 
         m_regionRendered = new HashSet<>();

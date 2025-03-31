@@ -1,7 +1,7 @@
-package org.example.Uitility;
+package stock.manager.ui.utility;
 
 import com.google.gson.Gson;
-import org.example.Configs;
+import stock.manager.ui.Configs;
 
 import java.io.IOException;
 import java.io.PrintStream;

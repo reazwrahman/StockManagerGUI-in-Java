@@ -1,6 +1,6 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
-import org.example.StockManager.StockSorter;
+import stock.manager.ui.stock_manager.StockSorter;
 
 import javax.swing.*;
 import java.awt.*;

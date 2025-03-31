@@ -1,4 +1,4 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
 import javax.swing.*;
 

@@ -1,6 +1,6 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
-import org.example.Configs;
+import stock.manager.ui.Configs;
 
 import javax.swing.*;
 import java.awt.*;

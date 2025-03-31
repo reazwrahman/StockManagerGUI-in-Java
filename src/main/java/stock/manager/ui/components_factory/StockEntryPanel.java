@@ -1,10 +1,10 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
 import com.google.gson.Gson;
-import org.example.Configs;
-import org.example.GUIApp;
-import org.example.StockManager.StockSorter;
-import org.example.Uitility.FileHandler;
+import stock.manager.ui.Configs;
+import stock.manager.ui.GUIApp;
+import stock.manager.ui.stock_manager.StockSorter;
+import stock.manager.ui.utility.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;

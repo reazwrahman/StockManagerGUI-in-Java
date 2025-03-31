@@ -1,4 +1,4 @@
-package org.example;
+package stock.manager.ui;
 
 public class Main {
     public static void main(String[] args) {

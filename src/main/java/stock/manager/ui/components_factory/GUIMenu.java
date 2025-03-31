@@ -1,7 +1,7 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
-import org.example.GUIApp;
-import org.example.Uitility.FileHandler;
+import stock.manager.ui.GUIApp;
+import stock.manager.ui.utility.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
