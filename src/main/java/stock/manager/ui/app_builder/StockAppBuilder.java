@@ -19,22 +19,18 @@ public class StockAppBuilder implements AppBuilderIF {
     public static final String ENTER_STOCK_TAB = "Enter Stock";
     public static final String ANALYSIS_TAB = "Analysis";
     public static final String INSTRUCTIONS_TAB = "Instructions";
-
-    SimpleFactory m_componentFactory; // to get GUI component from factory
-
     // maps all components on the GUI to the right region and tab
     public Map<String, Map<String, GUIComponentIF>> m_componentMapper = new HashMap<>();
-    private Set<String> m_regionRendered;
     public JFrame m_frame;
     public JTabbedPane m_mainTab;
-
+    SimpleFactory m_componentFactory; // to get GUI component from factory
     // custom GUI components
     GUIComponentIF m_menuComponent;
+    private Set<String> m_regionRendered;
     private Container m_contentPane;
 
-
     @Override
-    public void initialize(){
+    public void initialize() {
         m_componentFactory = SimpleFactory.getFactoryInstance(this);
 
         Map<String, GUIComponentIF> regionalMap = new HashMap<>();
@@ -60,13 +56,13 @@ public class StockAppBuilder implements AppBuilderIF {
     }
 
     @Override
-    public void renderMenu(){
+    public void renderMenu() {
         m_menuComponent = m_componentFactory.getComponent(ComponentEnums.MAIN_MENU);
         m_menuComponent.render();
     }
 
     @Override
-    public void renderTabbedPanes(){
+    public void renderTabbedPanes() {
         String[] orderedTabs = {INSTRUCTIONS_TAB, ENTER_STOCK_TAB, ANALYSIS_TAB};
         for (String tabTitle : orderedTabs) {
             GUIComponentIF component = m_componentMapper.get(TABBED_KEY).get(tabTitle);
@@ -80,7 +76,7 @@ public class StockAppBuilder implements AppBuilderIF {
     }
 
     @Override
-    public void renderRegions(){
+    public void renderRegions() {
         for (String region : m_componentMapper.get(REGIONAL_KEY).keySet()) {
             var component = m_componentMapper.get(REGIONAL_KEY).get(region);
             JPanel panel = component.getPanel();
@@ -93,7 +89,7 @@ public class StockAppBuilder implements AppBuilderIF {
     }
 
     @Override
-    public void refresh(){
+    public void refresh() {
         for (String region : m_componentMapper.keySet()) {
             for (String subRegion : m_componentMapper.get(region).keySet()) {
                 var component = m_componentMapper.get(region).get(subRegion);
@@ -105,7 +101,7 @@ public class StockAppBuilder implements AppBuilderIF {
     }
 
     @Override
-    public void startUI(){
+    public void startUI() {
         // set ui components
         renderMenu();
         renderTabbedPanes();
@@ -116,17 +112,17 @@ public class StockAppBuilder implements AppBuilderIF {
     }
 
     @Override
-    public JFrame getFrame(){
+    public JFrame getFrame() {
         return m_frame;
     }
 
     @Override
-    public Map<String, Map<String, GUIComponentIF>> getComponentMapper(){
+    public Map<String, Map<String, GUIComponentIF>> getComponentMapper() {
         return m_componentMapper;
     }
 
     @Override
-    public void reloadData(){
+    public void reloadData() {
         StockEntryPanel stockPanel = (StockEntryPanel) m_componentMapper.get(StockAppBuilder.TABBED_KEY).get(StockAppBuilder.ENTER_STOCK_TAB);
         stockPanel.reset();
         stockPanel.fillStockEntry();

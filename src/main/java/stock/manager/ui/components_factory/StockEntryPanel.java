@@ -26,10 +26,10 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int STOCK_PANEL_STARTS_AT = 2;
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
 
-    private AppBuilderIF m_app;
+    private final AppBuilderIF m_app;
     private Map<String, Map<String, String>> m_stockMap;
-    private FileHandler m_fileHandler;
-    private StockSorter m_stockSorter;
+    private final FileHandler m_fileHandler;
+    private final StockSorter m_stockSorter;
 
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
@@ -114,8 +114,8 @@ public class StockEntryPanel extends AbstractGUIComponent
 
             tickerField.setText(ticker);
             tickerField.setEditable(true);
-            qtyField.setText(m_stockMap.get(ticker).get("quantity").toString());
-            costField.setText(m_stockMap.get(ticker).get("totalCost").toString());
+            qtyField.setText(m_stockMap.get(ticker).get("quantity"));
+            costField.setText(m_stockMap.get(ticker).get("totalCost"));
         }
     }
 
@@ -248,7 +248,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         java.awt.Component[] components = m_panel.getComponents();
         m_stockMap = new HashMap<>();
 
-        if (components.length > STOCK_PANEL_STARTS_AT) { 
+        if (components.length > STOCK_PANEL_STARTS_AT) {
             for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
 
                 JPanel parentPanel = (JPanel) components[i];

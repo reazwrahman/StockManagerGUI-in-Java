@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.util.Map;
 
 public interface AppBuilderIF {
+
     void initialize();
 
     void startFrame();

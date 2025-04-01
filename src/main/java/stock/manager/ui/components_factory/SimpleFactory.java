@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class SimpleFactory {
     private static SimpleFactory factoryInstance;
-    private Map<ComponentEnums, GUIComponentIF> m_componentMapper;
+    private final Map<ComponentEnums, GUIComponentIF> m_componentMapper;
 
-    public SimpleFactory(AppBuilderIF app){
+    public SimpleFactory(AppBuilderIF app) {
         m_componentMapper = new HashMap<>();
         m_componentMapper.put(ComponentEnums.ANALYSIS_DISPLAY, new AnalysisDisplay());
         m_componentMapper.put(ComponentEnums.IMAGE_PANEL, new ImagePanel());
@@ -27,7 +27,7 @@ public class SimpleFactory {
         return factoryInstance;
     }
 
-    public GUIComponentIF getComponent(ComponentEnums type){
+    public GUIComponentIF getComponent(ComponentEnums type) {
         return m_componentMapper.get(type);
     }
 }

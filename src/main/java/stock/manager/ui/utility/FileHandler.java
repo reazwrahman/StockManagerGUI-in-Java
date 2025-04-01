@@ -36,7 +36,7 @@ public class FileHandler {
             stockMap = deserialized.fromJson(rawData, Map.class);
             return stockMap;
         } catch (Exception e) {
-            System.out.println("FileHandler::readStockEntries exception occured" + e.toString());
+            System.out.println("FileHandler::readStockEntries exception occured" + e);
             return stockMap;
         }
     }

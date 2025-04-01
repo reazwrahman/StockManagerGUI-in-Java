@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Map;
 
 public class StockSorter {
-    private FileHandler m_fileHandler;
+    private final FileHandler m_fileHandler;
     private ArrayList<Stock> m_sortedData;
 
     public StockSorter() {

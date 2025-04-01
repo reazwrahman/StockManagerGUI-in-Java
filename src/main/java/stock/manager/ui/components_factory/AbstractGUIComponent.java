@@ -36,6 +36,4 @@ public abstract class AbstractGUIComponent implements GUIComponentIF {
     public void updatePanel() {
     }
 
-    ;
-
 }
