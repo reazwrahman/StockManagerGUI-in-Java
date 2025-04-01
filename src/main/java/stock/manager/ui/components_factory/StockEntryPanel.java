@@ -2,7 +2,7 @@ package stock.manager.ui.components_factory;
 
 import com.google.gson.Gson;
 import stock.manager.ui.Configs;
-import stock.manager.ui.GUIApp;
+import stock.manager.ui.app_builder.AppBuilderIF;
 import stock.manager.ui.stock_manager.StockSorter;
 import stock.manager.ui.utility.FileHandler;
 
@@ -26,7 +26,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int STOCK_PANEL_STARTS_AT = 2;
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
 
-    private GUIApp m_app;
+    private AppBuilderIF m_app;
     private Map<String, Map<String, String>> m_stockMap;
     private FileHandler m_fileHandler;
     private StockSorter m_stockSorter;
@@ -36,7 +36,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private JButton m_deleteButton;
     private JButton m_submitButton;
 
-    public StockEntryPanel(GUIApp app) {
+    public StockEntryPanel(AppBuilderIF app) {
         m_app = app;
         m_stockMap = new HashMap<>();
         m_fileHandler = new FileHandler();
@@ -179,7 +179,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private void readEntries() {
         String validationResult = validateInput();
         if (!validationResult.isEmpty()) {
-            JOptionPane.showMessageDialog(m_app.frame,
+            JOptionPane.showMessageDialog(m_app.getFrame(),
                     validationResult,
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -268,7 +268,7 @@ public class StockEntryPanel extends AbstractGUIComponent
             writeToJson();
             reset();
             fillStockEntry();
-            JOptionPane.showMessageDialog(m_app.frame,
+            JOptionPane.showMessageDialog(m_app.getFrame(),
                     "Data Submitted",
                     "Submitted",
                     JOptionPane.INFORMATION_MESSAGE);

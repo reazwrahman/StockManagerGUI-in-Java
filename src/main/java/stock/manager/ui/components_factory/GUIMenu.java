@@ -1,6 +1,6 @@
 package stock.manager.ui.components_factory;
 
-import stock.manager.ui.GUIApp;
+import stock.manager.ui.app_builder.StockAppBuilder_old;
 import stock.manager.ui.utility.FileHandler;
 
 import javax.swing.*;
@@ -131,7 +131,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     private class reloadListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StockEntryPanel stockPanel = (StockEntryPanel) componentMapper.get(GUIApp.TABBED_KEY).get(GUIApp.ENTER_STOCK_TAB);
+            StockEntryPanel stockPanel = (StockEntryPanel) componentMapper.get(StockAppBuilder_old.TABBED_KEY).get(StockAppBuilder_old.ENTER_STOCK_TAB);
             stockPanel.reset();
             stockPanel.fillStockEntry();
         }

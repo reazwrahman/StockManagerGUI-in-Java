@@ -1,4 +1,4 @@
-package stock.manager.ui;
+package stock.manager.ui.app_builder;
 
 import stock.manager.ui.components_factory.*;
 import stock.manager.ui.components_factory.ComponentEnums;
@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GUIApp {
+public class StockAppBuilder_old implements AppBuilderIF{
     public static final String REGIONAL_KEY = "Regional";
     public static final String TABBED_KEY = "Tabbed";
     public static final String ENTER_STOCK_TAB = "Enter Stock";
@@ -26,9 +26,9 @@ public class GUIApp {
     GUIMenu menuComponent;
     private Container contentPane;
 
-    public GUIApp() {
+    public StockAppBuilder_old() {
         // factory code (WIP)
-        m_componentFactory = SimpleFactory.getFactoryInstance();
+        m_componentFactory = SimpleFactory.getFactoryInstance(this);
 
 
         Map<String, GUIComponentIF> regionalMap = new HashMap<>();
@@ -36,7 +36,7 @@ public class GUIApp {
         componentMapper.put(REGIONAL_KEY, regionalMap);
 
         Map<String, GUIComponentIF> tabbedMap = new HashMap<>();
-        tabbedMap.put(ENTER_STOCK_TAB, new StockEntryPanel(this));
+        tabbedMap.put(ENTER_STOCK_TAB, m_componentFactory.getComponent(ComponentEnums.STOCK_ENTRY_PANEL));
         tabbedMap.put(ANALYSIS_TAB, m_componentFactory.getComponent(ComponentEnums.ANALYSIS_DISPLAY));
         tabbedMap.put(INSTRUCTIONS_TAB, m_componentFactory.getComponent(ComponentEnums.INSTRUCTION_PANEL));
         componentMapper.put(TABBED_KEY, tabbedMap);
@@ -59,7 +59,7 @@ public class GUIApp {
         frame.setVisible(true);
     }
 
-    private void renderMenu() {
+    public void renderMenu() {
         menuComponent = new GUIMenu(frame, componentMapper);
         menuComponent.render();
     }
