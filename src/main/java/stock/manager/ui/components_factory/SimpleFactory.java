@@ -16,7 +16,7 @@ public class SimpleFactory {
         m_componentMapper.put(ComponentEnums.INSTRUCTION_PANEL, new StockEntryInstruction());
         m_componentMapper.put(ComponentEnums.STOCK_ENTRY_PANEL, new StockEntryPanel(app));
 
-        m_componentMapper.put(ComponentEnums.MAIN_MENU, new GUIMenu(app.getFrame(), app.getComponentMapper()));
+        m_componentMapper.put(ComponentEnums.MAIN_MENU, new GUIMenu(app));
     }
 
     // Singleton Pattern: only one factory instance is needed

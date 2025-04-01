@@ -1,6 +1,7 @@
 package stock.manager.ui.components_factory;
 
-import stock.manager.ui.app_builder.StockAppBuilder_old;
+import stock.manager.ui.app_builder.AppBuilderIF;
+import stock.manager.ui.app_builder.StockAppBuilder;
 import stock.manager.ui.utility.FileHandler;
 
 import javax.swing.*;
@@ -19,10 +20,12 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     JMenu helpMenu;
     JMenuItem menuItem;
     Map<String, Map<String, GUIComponentIF>> componentMapper;
+    AppBuilderIF m_appBuilder;
 
-    public GUIMenu(JFrame guiFrame, Map<String, Map<String, GUIComponentIF>> componentsMapped) {
-        frame = guiFrame;
-        componentMapper = componentsMapped;
+    public GUIMenu(AppBuilderIF appBuilder) {
+        m_appBuilder = appBuilder;
+        frame = appBuilder.getFrame();
+        componentMapper = appBuilder.getComponentMapper();
         fileHandler = new FileHandler();
     }
 
@@ -131,9 +134,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     private class reloadListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StockEntryPanel stockPanel = (StockEntryPanel) componentMapper.get(StockAppBuilder_old.TABBED_KEY).get(StockAppBuilder_old.ENTER_STOCK_TAB);
-            stockPanel.reset();
-            stockPanel.fillStockEntry();
+            m_appBuilder.reloadData();
         }
     }
 }

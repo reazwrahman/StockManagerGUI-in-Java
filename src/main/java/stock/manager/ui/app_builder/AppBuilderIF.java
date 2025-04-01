@@ -23,4 +23,6 @@ public interface AppBuilderIF {
     JFrame getFrame();
 
     Map<String, Map<String, GUIComponentIF>> getComponentMapper();
+
+    void reloadData();
 }

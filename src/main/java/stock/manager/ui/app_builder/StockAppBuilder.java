@@ -3,6 +3,7 @@ package stock.manager.ui.app_builder;
 import stock.manager.ui.components_factory.ComponentEnums;
 import stock.manager.ui.components_factory.GUIComponentIF;
 import stock.manager.ui.components_factory.SimpleFactory;
+import stock.manager.ui.components_factory.StockEntryPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -122,6 +123,13 @@ public class StockAppBuilder implements AppBuilderIF {
     @Override
     public Map<String, Map<String, GUIComponentIF>> getComponentMapper(){
         return m_componentMapper;
+    }
+
+    @Override
+    public void reloadData(){
+        StockEntryPanel stockPanel = (StockEntryPanel) m_componentMapper.get(StockAppBuilder.TABBED_KEY).get(StockAppBuilder.ENTER_STOCK_TAB);
+        stockPanel.reset();
+        stockPanel.fillStockEntry();
     }
 
     // -------------------------------------------------------------------//
