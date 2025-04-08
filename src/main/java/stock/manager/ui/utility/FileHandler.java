@@ -1,7 +1,7 @@
-package org.example.Uitility;
+package stock.manager.ui.utility;
 
 import com.google.gson.Gson;
-import org.example.Configs;
+import stock.manager.ui.Configs;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -36,7 +36,7 @@ public class FileHandler {
             stockMap = deserialized.fromJson(rawData, Map.class);
             return stockMap;
         } catch (Exception e) {
-            System.out.println("FileHandler::readStockEntries exception occured" + e.toString());
+            System.out.println("FileHandler::readStockEntries exception occured" + e);
             return stockMap;
         }
     }

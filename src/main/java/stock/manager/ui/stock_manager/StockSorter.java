@@ -1,13 +1,13 @@
-package org.example.StockManager;
+package stock.manager.ui.stock_manager;
 
-import org.example.Uitility.FileHandler;
+import stock.manager.ui.utility.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
 public class StockSorter {
-    private FileHandler m_fileHandler;
+    private final FileHandler m_fileHandler;
     private ArrayList<Stock> m_sortedData;
 
     public StockSorter() {

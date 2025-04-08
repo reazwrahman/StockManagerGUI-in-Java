@@ -1,4 +1,4 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
 import javax.swing.*;
 
@@ -35,7 +35,5 @@ public abstract class AbstractGUIComponent implements GUIComponentIF {
     @Override
     public void updatePanel() {
     }
-
-    ;
 
 }

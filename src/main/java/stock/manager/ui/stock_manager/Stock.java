@@ -1,4 +1,4 @@
-package org.example.StockManager;
+package stock.manager.ui.stock_manager;
 
 public class Stock implements Comparable<Stock> {
     public static String m_comparator = "TotalCost";

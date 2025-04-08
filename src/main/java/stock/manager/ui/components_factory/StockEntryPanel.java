@@ -1,10 +1,10 @@
-package org.example.GUIComponents;
+package stock.manager.ui.components_factory;
 
 import com.google.gson.Gson;
-import org.example.Configs;
-import org.example.GUIApp;
-import org.example.StockManager.StockSorter;
-import org.example.Uitility.FileHandler;
+import stock.manager.ui.Configs;
+import stock.manager.ui.app_builder.AppBuilderIF;
+import stock.manager.ui.stock_manager.StockSorter;
+import stock.manager.ui.utility.FileHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,17 +26,17 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int STOCK_PANEL_STARTS_AT = 2;
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
 
-    private GUIApp m_app;
+    private final AppBuilderIF m_app;
     private Map<String, Map<String, String>> m_stockMap;
-    private FileHandler m_fileHandler;
-    private StockSorter m_stockSorter;
+    private final FileHandler m_fileHandler;
+    private final StockSorter m_stockSorter;
 
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
     private JButton m_deleteButton;
     private JButton m_submitButton;
 
-    public StockEntryPanel(GUIApp app) {
+    public StockEntryPanel(AppBuilderIF app) {
         m_app = app;
         m_stockMap = new HashMap<>();
         m_fileHandler = new FileHandler();
@@ -114,8 +114,8 @@ public class StockEntryPanel extends AbstractGUIComponent
 
             tickerField.setText(ticker);
             tickerField.setEditable(true);
-            qtyField.setText(m_stockMap.get(ticker).get("quantity").toString());
-            costField.setText(m_stockMap.get(ticker).get("totalCost").toString());
+            qtyField.setText(m_stockMap.get(ticker).get("quantity"));
+            costField.setText(m_stockMap.get(ticker).get("totalCost"));
         }
     }
 
@@ -179,7 +179,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private void readEntries() {
         String validationResult = validateInput();
         if (!validationResult.isEmpty()) {
-            JOptionPane.showMessageDialog(m_app.frame,
+            JOptionPane.showMessageDialog(m_app.getFrame(),
                     validationResult,
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
@@ -248,7 +248,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         java.awt.Component[] components = m_panel.getComponents();
         m_stockMap = new HashMap<>();
 
-        if (components.length > STOCK_PANEL_STARTS_AT) { 
+        if (components.length > STOCK_PANEL_STARTS_AT) {
             for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
 
                 JPanel parentPanel = (JPanel) components[i];
@@ -268,7 +268,7 @@ public class StockEntryPanel extends AbstractGUIComponent
             writeToJson();
             reset();
             fillStockEntry();
-            JOptionPane.showMessageDialog(m_app.frame,
+            JOptionPane.showMessageDialog(m_app.getFrame(),
                     "Data Submitted",
                     "Submitted",
                     JOptionPane.INFORMATION_MESSAGE);
