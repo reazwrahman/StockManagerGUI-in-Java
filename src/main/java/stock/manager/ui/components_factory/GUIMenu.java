@@ -17,6 +17,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     JMenuBar menuBar;
     JMenu viewMenu;
     JMenu helpMenu;
+    JMenu analyzeMenu;
     JMenuItem menuItem;
     Map<String, Map<String, GUIComponentIF>> componentMapper;
     AppBuilderIF m_appBuilder;
@@ -71,11 +72,15 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         viewMenu = new JMenu("View"); // this is the first "menu" type object
         viewMenu.setMnemonic(KeyEvent.VK_V);
 
+        analyzeMenu = new JMenu("Analyze");
+        analyzeMenu.setMnemonic(KeyEvent.VK_A);
+
         helpMenu = new JMenu("Help");
         helpMenu.setMnemonic(KeyEvent.VK_H);
 
         menuBar.add(viewMenu); // add the menu object to the bar
         menuBar.add(helpMenu);
+        menuBar.add(analyzeMenu);
         addMenuItems();
     }
 
@@ -106,6 +111,21 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         helpMenu.add(menuItem);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
         menuItem.addActionListener(new aboutListener());
+
+
+        // ----- Analyze Menu ------ //
+        menuItem = new JMenuItem("Sort by Return Rate");
+        analyzeMenu.add(menuItem);
+        menuItem.addActionListener(new SortByReturnRateListener());
+
+        menuItem = new JMenuItem("Sort by Total Gain");
+        analyzeMenu.add(menuItem);
+        menuItem.addActionListener(new SortByTotalGainListener());
+
+        menuItem = new JMenuItem("Sort by Total Cost");
+        analyzeMenu.add(menuItem);
+        menuItem.addActionListener(new SortByTotalCostListener());
+
     }
 
     private class aboutListener implements ActionListener {
@@ -134,6 +154,30 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         @Override
         public void actionPerformed(ActionEvent e) {
             m_appBuilder.reloadData();
+        }
+    }
+
+    private class SortByReturnRateListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+           analysisDisplay.sortByReturnRate();
+        }
+    }
+
+    private class SortByTotalGainListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+            analysisDisplay.sortByTotalGain();
+        }
+    }
+
+    private class  SortByTotalCostListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+            analysisDisplay.sortByTotalCost();
         }
     }
 }

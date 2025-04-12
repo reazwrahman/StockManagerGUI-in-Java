@@ -14,7 +14,7 @@ public class StockSorter {
         m_fileHandler = new FileHandler();
     }
 
-    private void loadData() {
+    public void loadData() {
         m_sortedData = new ArrayList<>();
         Map<String, Map<String, String>> rawData = m_fileHandler.readStockEntries();
         for (String ticker : rawData.keySet()) {
@@ -60,6 +60,10 @@ public class StockSorter {
         }
 
         return builder.toString();
+    }
+
+    public void test(){
+
     }
 
 }

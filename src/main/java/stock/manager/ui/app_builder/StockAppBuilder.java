@@ -128,6 +128,11 @@ public class StockAppBuilder implements AppBuilderIF {
         stockPanel.fillStockEntry();
     }
 
+    @Override
+    public GUIComponentIF getAnalysisPanel() {
+        return m_componentMapper.get(TABBED_KEY).get(ANALYSIS_TAB);
+    }
+
     // -------------------------------------------------------------------//
     // -------------------- helper methods  ------------------------------//
     // -------------------------------------------------------------------//

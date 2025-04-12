@@ -26,4 +26,6 @@ public interface AppBuilderIF {
     Map<String, Map<String, GUIComponentIF>> getComponentMapper();
 
     void reloadData();
+
+    GUIComponentIF getAnalysisPanel();
 }
