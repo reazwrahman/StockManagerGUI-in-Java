@@ -52,7 +52,7 @@ public class DisplayHelper {
         // Header row
         builder.append("\n");
         builder.append("+------+--------------+--------------+--------------+--------------+--------------+--------------+\n");
-        builder.append(String.format("| %-4s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s |\n", "", "Ticker", "Quantity", "Cost", "Price", "Gain", "Return %"));
+        builder.append(String.format("| %-4s | %-12s | %-12s | %-12s | %-12s | %-12s | %-12s |\n", "", "Ticker", "Quantity", "Cost", "Price", "Gain", "Return Rate"));
         builder.append("+------+--------------+--------------+--------------+--------------+--------------+--------------+\n");
 
 

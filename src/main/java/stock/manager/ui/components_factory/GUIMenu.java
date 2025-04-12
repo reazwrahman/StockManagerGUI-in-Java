@@ -132,7 +132,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         String message = "Stock Portfolio Management System\n" +
                 "Easily manage and analyze your stock performance\n" +
                 "Author: Reaz W. Rahman \n" +
-                "All Rights Reserved © 2024.";
+                "All Rights Reserved © 2025.";
 
         @Override
         public void actionPerformed(ActionEvent e) {
