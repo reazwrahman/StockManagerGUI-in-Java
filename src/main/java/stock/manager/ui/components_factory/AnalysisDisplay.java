@@ -59,17 +59,17 @@ public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponen
         m_panel.repaint();
     }
 
-    public void sortByTotalCost(){
+    public void sortByTotalCost() {
         m_stockSorter.updateData();
         updatePanel(m_stockSorter.toString());
     }
 
-    public void sortByReturnRate(){
+    public void sortByReturnRate() {
         updatePanel(API_CALL_MESSAGE);
         updatePanel(displayHelper.getReturnRateString());
     }
 
-    public void sortByTotalGain(){
+    public void sortByTotalGain() {
         updatePanel(API_CALL_MESSAGE);
         updatePanel(displayHelper.getTotalGainString());
     }

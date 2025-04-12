@@ -1,1 +1,26 @@
-{"MSFT":{"quantity":"12","totalCost":"12000"},"GOOGL":{"quantity":"2.89","totalCost":"500.12"},"AAPL":{"quantity":"87.23","totalCost":"8923.77"},"COF":{"quantity":"2.598","totalCost":"901.234"}}
+{
+  "MSFT": {
+    "quantity": "12",
+    "totalCost": "12000"
+  },
+  "GOOGL": {
+    "quantity": "2.89",
+    "totalCost": "500.12"
+  },
+  "AAPL": {
+    "quantity": "87.23",
+    "totalCost": "8923.77"
+  },
+  "NOC": {
+    "quantity": "12",
+    "totalCost": "561.2"
+  },
+  "COF": {
+    "quantity": "2.598",
+    "totalCost": "901.234"
+  },
+  "BA": {
+    "quantity": "87.78",
+    "totalCost": "17299.44"
+  }
+}

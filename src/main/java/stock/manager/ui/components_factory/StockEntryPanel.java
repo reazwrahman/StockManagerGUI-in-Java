@@ -27,10 +27,9 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
 
     private final AppBuilderIF m_app;
-    private Map<String, Map<String, String>> m_stockMap;
     private final FileHandler m_fileHandler;
     private final StockSorter m_stockSorter;
-
+    private Map<String, Map<String, String>> m_stockMap;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
     private JButton m_deleteButton;

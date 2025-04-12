@@ -15,5 +15,6 @@ public class Stock implements Comparable<Stock> {
 
 
     public int compareTo(Stock otherStock) {
-        return this.m_totalCost.compareTo(otherStock.m_totalCost); }
+        return this.m_totalCost.compareTo(otherStock.m_totalCost);
+    }
 }

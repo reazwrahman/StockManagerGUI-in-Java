@@ -62,7 +62,7 @@ public class StockSorter {
         return builder.toString();
     }
 
-    public void test(){
+    public void test() {
 
     }
 

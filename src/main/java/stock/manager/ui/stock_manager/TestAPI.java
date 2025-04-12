@@ -1,9 +1,5 @@
 package stock.manager.ui.stock_manager;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class TestAPI {
 //    public static void main(String[] args) throws IOException, InterruptedException {
 //        List<Stock> stocks = new ArrayList<>();

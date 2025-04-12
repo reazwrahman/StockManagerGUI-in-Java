@@ -50,6 +50,7 @@ public class StockAppBuilder implements AppBuilderIF {
     @Override
     public void startFrame() {
         m_frame = new JFrame("Portfolio Analyzer");
+        m_frame.setSize(1200, 700);
         m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         m_contentPane = m_frame.getContentPane();
         m_mainTab = new JTabbedPane();

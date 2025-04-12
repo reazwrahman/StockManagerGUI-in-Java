@@ -160,8 +160,8 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     private class SortByReturnRateListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-           AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
-           analysisDisplay.sortByReturnRate();
+            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+            analysisDisplay.sortByReturnRate();
         }
     }
 
@@ -173,7 +173,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
         }
     }
 
-    private class  SortByTotalCostListener implements ActionListener {
+    private class SortByTotalCostListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
