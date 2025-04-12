@@ -30,6 +30,15 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     }
 
     @Override
+    public String getDescription() {
+        String description = "GUIMenu: Displays all menu items for the GUI";
+        System.out.println(description);
+        return description;
+    }
+
+    ;
+
+    @Override
     public JPanel getPanel() {
         return null; // placeholder implementation, menu doesn't need panel
     }

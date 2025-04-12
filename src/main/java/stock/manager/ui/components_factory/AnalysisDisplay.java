@@ -18,6 +18,15 @@ public class AnalysisDisplay extends AbstractGUIComponent implements GUIComponen
         displayHelper = new DisplayHelper();
     }
 
+    ;
+
+    @Override
+    public String getDescription() {
+        String description = "AnalysisDisplay: Responsible for displaying stock data post analysis";
+        System.out.println(description);
+        return description;
+    }
+
     @Override
     public void render() {
         m_panel = new JPanel();

@@ -45,6 +45,13 @@ public class StockEntryPanel extends AbstractGUIComponent
     }
 
     @Override
+    public String getDescription() {
+        String description = "StockEntryPanel: This is where stock entries added, removed or updated";
+        System.out.println(description);
+        return description;
+    }
+
+    @Override
     public void render() {
         // setup main panel
         m_panel = new JPanel();

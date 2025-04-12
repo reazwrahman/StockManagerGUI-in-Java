@@ -3,6 +3,9 @@ package stock.manager.ui.components_factory;
 import javax.swing.*;
 
 public interface GUIComponentIF {
+
+    String getDescription();
+
     void render();
 
     JPanel getPanel();

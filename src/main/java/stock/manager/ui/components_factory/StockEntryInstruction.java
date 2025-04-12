@@ -35,4 +35,12 @@ public class StockEntryInstruction extends AbstractGUIComponent
     public Boolean enableHorizontalScroll() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        String description = "StockEntryInstruction: Displays the instructions for entering/updating/deleting " +
+                "stock entries for first time users";
+        System.out.println(description);
+        return description;
+    }
 }

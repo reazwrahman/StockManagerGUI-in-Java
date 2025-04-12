@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SimpleFactory {
     private static SimpleFactory factoryInstance;
-    private final Map<ComponentEnums, GUIComponentIF> m_componentMapper;
+    final Map<ComponentEnums, GUIComponentIF> m_componentMapper;
 
     public SimpleFactory(AppBuilderIF app) {
         m_componentMapper = new HashMap<>();

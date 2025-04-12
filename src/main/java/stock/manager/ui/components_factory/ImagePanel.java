@@ -17,4 +17,12 @@ public class ImagePanel extends AbstractGUIComponent implements GUIComponentIF {
         m_panel.setPreferredSize(new Dimension(400, 250));
         m_panel.add(imgLabel);
     }
+
+    @Override
+    public String getDescription() {
+        String description = "ImagePanel: Displays the welcome cover pictue for the GUI";
+        System.out.println(description);
+        return description;
+    }
+
 }
