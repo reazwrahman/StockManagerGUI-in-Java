@@ -1,12 +1,13 @@
 package stock.manager.ui.stock_manager.backend;
 
+import stock.manager.ui.Configs;
 import stock.manager.ui.stock_manager.StockSorter;
 import stock.manager.ui.stock_manager.StockWithPrice;
 
 import java.util.List;
 
 public class DisplayHelper {
-    private final String ACCESS_KEY = "reaz_123";
+    private final String ACCESS_KEY = Configs.ACCESS_KEY;
     private final String ALTERNATE_MESSAGE = "Something went wrong downstream, please try again later.";
     private StockApiClient m_backend;
     private StockSorter m_stockSorter;

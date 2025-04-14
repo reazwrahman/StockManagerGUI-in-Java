@@ -1,5 +1,7 @@
 package stock.manager.ui.stock_manager.backend;
 
+import stock.manager.ui.Configs;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -9,7 +11,8 @@ import java.net.http.HttpResponse;
 
 public class StockApiClient {
 
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = Configs.API_MODE == Configs.API_MODE_ENUM.REMOTE ?
+                                            Configs.REMOTE_API_URL : Configs.LOCAL_API_URL;
     private final HttpClient client;
 
     public StockApiClient() {
