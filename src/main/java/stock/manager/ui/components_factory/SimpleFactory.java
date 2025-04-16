@@ -1,6 +1,7 @@
 package stock.manager.ui.components_factory;
 
 import stock.manager.ui.app_builder.AppBuilderIF;
+import stock.manager.ui.components_factory.menu_decorator.GUIMenu;
 
 import java.util.HashMap;
 import java.util.Map;
