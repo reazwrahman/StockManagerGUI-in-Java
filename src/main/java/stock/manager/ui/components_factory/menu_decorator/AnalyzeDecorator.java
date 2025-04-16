@@ -8,27 +8,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class MenuForAnalyze extends AbstractMenu{
+public class AnalyzeDecorator extends AbstractMenuDecorator {
 
-    public MenuForAnalyze(AppBuilderIF appBuilder, AbstractMenu parent){
-        m_menu = new JMenu("Analyze");
-        addMenuItems();
-        setMenuBar(parent);
+    public AnalyzeDecorator(AppBuilderIF appBuilder, AbstractMenuDecorator parent, String title) {
+        super(appBuilder, parent, title);
     }
 
     protected void addMenuItems(){
         JMenuItem menuItem;
         menuItem = new JMenuItem("Sort by Return Rate");
         m_menu.add(menuItem);
-        menuItem.addActionListener(new MenuForAnalyze.SortByReturnRateListener());
+        menuItem.addActionListener(new AnalyzeDecorator.SortByReturnRateListener());
 
         menuItem = new JMenuItem("Sort by Total Gain");
         m_menu.add(menuItem);
-        menuItem.addActionListener(new MenuForAnalyze.SortByTotalGainListener());
+        menuItem.addActionListener(new AnalyzeDecorator.SortByTotalGainListener());
 
         menuItem = new JMenuItem("Sort by Total Cost");
         m_menu.add(menuItem);
-        menuItem.addActionListener(new MenuForAnalyze.SortByTotalCostListener());
+        menuItem.addActionListener(new AnalyzeDecorator.SortByTotalCostListener());
 
     }
 

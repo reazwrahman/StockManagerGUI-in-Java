@@ -1,7 +1,6 @@
 package stock.manager.ui.components_factory.menu_decorator;
 
 import stock.manager.ui.app_builder.AppBuilderIF;
-import stock.manager.ui.app_builder.StockAppBuilder;
 import stock.manager.ui.components_factory.AbstractGUIComponent;
 import stock.manager.ui.components_factory.GUIComponentIF;
 
@@ -19,9 +18,10 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
 
     @Override
     public void render() {
-        AbstractMenu mainMenu = new MenuForView(m_appBuilder, null);
-        mainMenu = new MenuForAnalyze(m_appBuilder, mainMenu);
-        mainMenu = new MenuForHelp(m_appBuilder, mainMenu);
+        AbstractMenuDecorator mainMenu = null;
+        mainMenu = new ViewDecorator(m_appBuilder, mainMenu, "View"); // View behavior is added
+        mainMenu = new AnalyzeDecorator(m_appBuilder, mainMenu, "Analyze"); // Analyze is wrapped on top of view
+        mainMenu = new HelpDecorator(m_appBuilder, mainMenu, "Help"); // Help is wrapped on top of Analyze
         frame.setJMenuBar(mainMenu.m_menuBar);
     }
 }

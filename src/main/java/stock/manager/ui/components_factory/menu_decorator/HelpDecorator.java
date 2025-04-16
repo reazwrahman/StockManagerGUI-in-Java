@@ -1,7 +1,6 @@
 package stock.manager.ui.components_factory.menu_decorator;
 
 import stock.manager.ui.app_builder.AppBuilderIF;
-import stock.manager.ui.components_factory.GUIMenuOld;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class MenuForHelp extends AbstractMenu{
+public class HelpDecorator extends AbstractMenuDecorator {
 
-    public MenuForHelp(AppBuilderIF appBuilder, AbstractMenu parent){
-        m_menu = new JMenu("Help");
-        addMenuItems();
-        setMenuBar(parent);
+    public HelpDecorator(AppBuilderIF appBuilder, AbstractMenuDecorator parent, String title) {
+        super(appBuilder, parent, title);
     }
 
     @Override
@@ -28,7 +25,7 @@ public class MenuForHelp extends AbstractMenu{
         menuItem = new JMenuItem("About");
         m_menu.add(menuItem);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
-        menuItem.addActionListener(new MenuForHelp.aboutListener());
+        menuItem.addActionListener(new HelpDecorator.aboutListener());
     }
 
     private class aboutListener implements ActionListener {

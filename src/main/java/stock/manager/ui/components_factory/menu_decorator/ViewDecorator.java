@@ -10,12 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
-public class MenuForView extends AbstractMenu{
+public class ViewDecorator extends AbstractMenuDecorator {
 
-    public MenuForView(AppBuilderIF builder, AbstractMenu parent) {
-        m_menu = new JMenu("View");
-        addMenuItems();
-        setMenuBar(parent);
+    public ViewDecorator(AppBuilderIF appBuilder, AbstractMenuDecorator parent, String title) {
+        super(appBuilder, parent, title);
     }
 
     @Override
@@ -29,12 +27,12 @@ public class MenuForView extends AbstractMenu{
         menuItem = new JMenuItem("Reset");
         m_menu.add(menuItem);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
-        menuItem.addActionListener(new MenuForView.newListener());
+        menuItem.addActionListener(new ViewDecorator.newListener());
 
         menuItem = new JMenuItem("Reload Data");
         m_menu.add(menuItem);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, Event.CTRL_MASK));
-        menuItem.addActionListener(new MenuForView.reloadListener());
+        menuItem.addActionListener(new ViewDecorator.reloadListener());
 
 
         menuItem = new JMenuItem("Exit");
