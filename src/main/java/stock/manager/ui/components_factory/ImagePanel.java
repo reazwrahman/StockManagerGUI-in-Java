@@ -20,7 +20,7 @@ public class ImagePanel extends AbstractGUIComponent implements GUIComponentIF {
 
     @Override
     public String getDescription() {
-        String description = "ImagePanel: Displays the welcome cover pictue for the GUI";
+        String description = "ImagePanel: Displays the welcome cover picture for the GUI";
         System.out.println(description);
         return description;
     }

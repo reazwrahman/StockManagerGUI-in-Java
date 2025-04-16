@@ -30,7 +30,7 @@ public class StockAppBuilder implements AppBuilderIF {
     private Container m_contentPane;
 
     @Override
-    public void initialize() {
+    public void setupTabsAndPanels() {
         m_componentFactory = SimpleFactory.getFactoryInstance(this);
 
         Map<String, GUIComponentIF> regionalMap = new HashMap<>();
@@ -102,11 +102,6 @@ public class StockAppBuilder implements AppBuilderIF {
 
     @Override
     public void startUI() {
-        // set ui components
-        renderMenu();
-        renderTabbedPanes();
-        renderRegions();
-
         m_frame.setSize(900, 700);
         m_frame.setVisible(true);
     }
@@ -129,8 +124,8 @@ public class StockAppBuilder implements AppBuilderIF {
     }
 
     @Override
-    public GUIComponentIF getAnalysisPanel() {
-        return m_componentMapper.get(TABBED_KEY).get(ANALYSIS_TAB);
+    public GUIComponentIF getPanel(String panelIdentifier) {
+        return m_componentMapper.get(TABBED_KEY).get(panelIdentifier);
     }
 
     // -------------------------------------------------------------------//

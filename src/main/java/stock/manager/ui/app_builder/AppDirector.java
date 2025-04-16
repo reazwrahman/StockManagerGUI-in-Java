@@ -9,7 +9,10 @@ public class AppDirector {
 
     public void constructUI() {
         m_builder.startFrame();
-        m_builder.initialize();
+        m_builder.setupTabsAndPanels();
+        m_builder.renderMenu();
+        m_builder.renderTabbedPanes();
+        m_builder.renderRegions();
         m_builder.startUI();
     }
 

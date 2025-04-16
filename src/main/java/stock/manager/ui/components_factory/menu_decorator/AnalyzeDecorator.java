@@ -1,6 +1,7 @@
 package stock.manager.ui.components_factory.menu_decorator;
 
 import stock.manager.ui.app_builder.AppBuilderIF;
+import stock.manager.ui.app_builder.StockAppBuilder;
 import stock.manager.ui.components_factory.AnalysisDisplay;
 
 import javax.swing.*;
@@ -41,7 +42,7 @@ public class AnalyzeDecorator extends AbstractMenuDecorator {
     private class SortByReturnRateListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getPanel(StockAppBuilder.ANALYSIS_TAB);
             analysisDisplay.sortByReturnRate();
         }
     }
@@ -49,7 +50,7 @@ public class AnalyzeDecorator extends AbstractMenuDecorator {
     private class SortByTotalGainListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getPanel(StockAppBuilder.ANALYSIS_TAB);
             analysisDisplay.sortByTotalGain();
         }
     }
@@ -57,7 +58,7 @@ public class AnalyzeDecorator extends AbstractMenuDecorator {
     private class SortByTotalCostListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getAnalysisPanel();
+            AnalysisDisplay analysisDisplay = (AnalysisDisplay) m_appBuilder.getPanel(StockAppBuilder.ANALYSIS_TAB);
             analysisDisplay.sortByTotalCost();
         }
     }
