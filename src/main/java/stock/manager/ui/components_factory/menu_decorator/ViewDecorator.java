@@ -46,6 +46,16 @@ public class ViewDecorator extends AbstractMenuDecorator {
         });
     }
 
+    public void reset() {
+        Map<String, Map<String, GUIComponentIF>> componentMapper = m_appBuilder.getComponentMapper();
+        for (String region : componentMapper.keySet()) {
+            for (String subRegion : componentMapper.get(region).keySet()) {
+                var component = componentMapper.get(region).get(subRegion);
+                component.reset();
+            }
+        }
+    }
+
     private class newListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -57,16 +67,6 @@ public class ViewDecorator extends AbstractMenuDecorator {
         @Override
         public void actionPerformed(ActionEvent e) {
             m_appBuilder.reloadData();
-        }
-    }
-
-    public void reset() {
-        Map<String, Map<String, GUIComponentIF>> componentMapper = m_appBuilder.getComponentMapper();
-        for (String region : componentMapper.keySet()) {
-            for (String subRegion : componentMapper.get(region).keySet()) {
-                var component = componentMapper.get(region).get(subRegion);
-                component.reset();
-            }
         }
     }
 }

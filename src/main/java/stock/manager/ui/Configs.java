@@ -7,6 +7,7 @@ public class Configs {
     public static final String REMOTE_API_URL = "http://stock-manager.reaz-projects.uk";
     public static final String LOCAL_API_URL = "http://localhost:8080";
     public static final String ACCESS_KEY = "reaz_123";
+
     public static enum API_MODE_ENUM {
         LOCAL,
         REMOTE

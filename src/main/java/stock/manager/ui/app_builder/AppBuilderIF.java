@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface AppBuilderIF {
 
-    void initialize();
-
     void startFrame();
+
+    void setupTabsAndPanels();
 
     void renderMenu();
 
@@ -27,5 +27,5 @@ public interface AppBuilderIF {
 
     void reloadData();
 
-    GUIComponentIF getAnalysisPanel();
+    GUIComponentIF getPanel(String panelIdentifier);
 }
