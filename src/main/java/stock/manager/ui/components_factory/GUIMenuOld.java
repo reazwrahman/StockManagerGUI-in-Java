@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
-public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
+public class GUIMenuOld extends AbstractGUIComponent implements GUIComponentIF {
     private final JFrame frame;
     private final FileHandler fileHandler;
     // menu related
@@ -22,7 +22,7 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
     Map<String, Map<String, GUIComponentIF>> componentMapper;
     AppBuilderIF m_appBuilder;
 
-    public GUIMenu(AppBuilderIF appBuilder) {
+    public GUIMenuOld(AppBuilderIF appBuilder) {
         m_appBuilder = appBuilder;
         frame = appBuilder.getFrame();
         componentMapper = appBuilder.getComponentMapper();
@@ -51,25 +51,6 @@ public class GUIMenu extends AbstractGUIComponent implements GUIComponentIF {
                 component.reset();
             }
         }
-    }
-
-    @Override
-    public String validateInput() {
-
-        for (String region : componentMapper.keySet()) {
-            for (String subRegion : componentMapper.get(region).keySet()) {
-                var component = componentMapper.get(region).get(subRegion);
-                String errorMessage = component.validateInput();
-                if (!errorMessage.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame,
-                            errorMessage,
-                            "Order Error",
-                            JOptionPane.ERROR_MESSAGE);
-                    return errorMessage;
-                }
-            }
-        }
-        return "";
     }
 
 
