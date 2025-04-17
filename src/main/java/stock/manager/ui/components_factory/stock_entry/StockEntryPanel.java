@@ -113,7 +113,6 @@ public class StockEntryPanel extends AbstractGUIComponent
         topAlignedPanel.add(panel, BorderLayout.NORTH);
 
         m_panel.add(topAlignedPanel);
-
     }
 
     public void fillStockEntry() {
