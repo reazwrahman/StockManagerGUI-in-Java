@@ -1,1 +1,54 @@
-{"GOOGL":{"quantity":"2.89","totalCost":"5002.12"},"NVDA":{"quantity":"8","totalCost":"1298.76"},"AAPL":{"quantity":"87.23","totalCost":"8923.77"},"NOC":{"quantity":"12","totalCost":"5612.2"},"VTSAX":{"quantity":"6","totalCost":"856.90"},"MSFT":{"quantity":"12","totalCost":"12000"},"QQQ":{"quantity":"3","totalCost":"1600.23"},"LMT":{"quantity":"8.76","totalCost":"8912.23"},"VOO":{"quantity":"78.45","totalCost":"5000.45"},"VNQ":{"quantity":"4","totalCost":"1500.78"},"COF":{"quantity":"2.598","totalCost":"9011.234"},"AMZN":{"quantity":"78.21","totalCost":"89670.99"},"BA":{"quantity":"87.78","totalCost":"17299.44"}}
+{
+  "GOOGL": {
+    "quantity": "2.89",
+    "totalCost": "5002.12"
+  },
+  "NVDA": {
+    "quantity": "8",
+    "totalCost": "1298.76"
+  },
+  "AAPL": {
+    "quantity": "87.23",
+    "totalCost": "8923.77"
+  },
+  "NOC": {
+    "quantity": "12",
+    "totalCost": "5612.2"
+  },
+  "VTSAX": {
+    "quantity": "6",
+    "totalCost": "856.90"
+  },
+  "MSFT": {
+    "quantity": "12",
+    "totalCost": "12000"
+  },
+  "QQQ": {
+    "quantity": "3",
+    "totalCost": "1600.23"
+  },
+  "LMT": {
+    "quantity": "8.76",
+    "totalCost": "8912.23"
+  },
+  "VOO": {
+    "quantity": "78.45",
+    "totalCost": "5000.45"
+  },
+  "VNQ": {
+    "quantity": "4",
+    "totalCost": "1500.78"
+  },
+  "COF": {
+    "quantity": "2.598",
+    "totalCost": "9011.234"
+  },
+  "AMZN": {
+    "quantity": "78.21",
+    "totalCost": "89670.99"
+  },
+  "BA": {
+    "quantity": "87.78",
+    "totalCost": "17299.44"
+  }
+}

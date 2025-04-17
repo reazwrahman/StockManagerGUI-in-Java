@@ -25,11 +25,10 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int HEIGHT = 26;
     private static final int STOCK_PANEL_STARTS_AT = 2;
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
-    private Integer stockEntryCounter = 0;
-
     private final AppBuilderIF m_app;
     private final FileHandler m_fileHandler;
     private final StockSorter m_stockSorter;
+    private Integer stockEntryCounter = 0;
     private Map<String, Map<String, String>> m_stockMap;
     private JPanel m_buttonsPanel;
     private JButton m_addButton;
@@ -131,7 +130,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         }
     }
 
-    private JPanel addStockEntry() {
+    public JPanel addStockEntry() {
         stockEntryCounter++;
         JPanel stockPanel = new JPanel();
         stockPanel.setLayout(new BoxLayout(stockPanel, BoxLayout.X_AXIS));
@@ -172,7 +171,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         return stockPanel;
     }
 
-    private boolean deleteStockEntry() {
+    public boolean deleteStockEntry() {
         java.awt.Component[] components = m_panel.getComponents();
         int length = components.length;
         if (length > STOCK_PANEL_STARTS_AT) { // 0: buttons, 1: labels
@@ -193,7 +192,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_app.refresh();
     }
 
-    private void readEntries() {
+    public void readEntries() {
         String validationResult = validateInput();
         if (!validationResult.isEmpty()) {
             JOptionPane.showMessageDialog(m_app.getFrame(),
