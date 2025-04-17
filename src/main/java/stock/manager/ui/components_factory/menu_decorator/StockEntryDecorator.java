@@ -2,7 +2,7 @@ package stock.manager.ui.components_factory.menu_decorator;
 
 import stock.manager.ui.app_builder.AppBuilderIF;
 import stock.manager.ui.app_builder.StockAppBuilder;
-import stock.manager.ui.components_factory.StockEntryPanel;
+import stock.manager.ui.components_factory.stock_entry.StockEntryPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

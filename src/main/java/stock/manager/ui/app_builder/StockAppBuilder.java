@@ -3,7 +3,7 @@ package stock.manager.ui.app_builder;
 import stock.manager.ui.components_factory.ComponentEnums;
 import stock.manager.ui.components_factory.GUIComponentIF;
 import stock.manager.ui.components_factory.SimpleFactory;
-import stock.manager.ui.components_factory.StockEntryPanel;
+import stock.manager.ui.components_factory.stock_entry.StockEntryPanel;
 
 import javax.swing.*;
 import java.awt.*;

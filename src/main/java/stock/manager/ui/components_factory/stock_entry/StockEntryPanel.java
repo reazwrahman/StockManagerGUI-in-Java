@@ -1,8 +1,10 @@
-package stock.manager.ui.components_factory;
+package stock.manager.ui.components_factory.stock_entry;
 
 import com.google.gson.Gson;
 import stock.manager.ui.Configs;
 import stock.manager.ui.app_builder.AppBuilderIF;
+import stock.manager.ui.components_factory.AbstractGUIComponent;
+import stock.manager.ui.components_factory.GUIComponentIF;
 import stock.manager.ui.stock_manager.StockSorter;
 import stock.manager.ui.utility.FileHandler;
 
@@ -15,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 
 public class StockEntryPanel extends AbstractGUIComponent
         implements GUIComponentIF, ActionListener {
@@ -117,47 +118,31 @@ public class StockEntryPanel extends AbstractGUIComponent
 
     public void fillStockEntry() {
         for (String ticker : m_stockMap.keySet()) {
-            JPanel stockPanel = addStockEntry();
-            JLabel counter = (JLabel) stockPanel.getComponent(0);
-            JTextField tickerField = (JTextField) stockPanel.getComponent(2);
-            JTextField qtyField = (JTextField) stockPanel.getComponent(4);
-            JTextField costField = (JTextField) stockPanel.getComponent(6);
-
-            tickerField.setText(ticker);
-            tickerField.setEditable(true);
-            qtyField.setText(m_stockMap.get(ticker).get("quantity"));
-            costField.setText(m_stockMap.get(ticker).get("totalCost"));
+            PanelRow row = addStockEntry();
+            row.ticker.setText(ticker);
+            row.ticker.setEditable(true);
+            row.qty.setText(m_stockMap.get(ticker).get("quantity"));
+            row.cost.setText(m_stockMap.get(ticker).get("totalCost"));
         }
     }
 
-    public JPanel addStockEntry() {
+    public PanelRow addStockEntry() {
         stockEntryCounter++;
         JPanel stockPanel = new JPanel();
         stockPanel.setLayout(new BoxLayout(stockPanel, BoxLayout.X_AXIS));
         stockPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         stockPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
-        JLabel counter = new JLabel(stockEntryCounter.toString());
-        JTextField textField1 = new JTextField();
-        JTextField textField2 = new JTextField();
-        JTextField textField3 = new JTextField();
-        Dimension textFieldSize = new Dimension(100, 25);
-        textField1.setPreferredSize(textFieldSize);
-        textField2.setPreferredSize(textFieldSize);
-        textField3.setPreferredSize(textFieldSize);
-
-        textField1.setMaximumSize(textFieldSize); // Restrict maximum size
-        textField2.setMaximumSize(textFieldSize);
-        textField3.setMaximumSize(textFieldSize);
+        PanelRow row = new PanelRow(stockEntryCounter.toString());
 
         // Add text fields to panel with gaps
-        stockPanel.add(counter);
+        stockPanel.add(row.counter);
         stockPanel.add(Box.createHorizontalStrut(10)); // Gap between fields
-        stockPanel.add(textField1);
+        stockPanel.add(row.ticker);
         stockPanel.add(Box.createHorizontalStrut(10)); // Gap between fields
-        stockPanel.add(textField2);
+        stockPanel.add(row.qty);
         stockPanel.add(Box.createHorizontalStrut(10));
-        stockPanel.add(textField3);
+        stockPanel.add(row.cost);
         stockPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
         // Wrap the panel in a top-aligned container
@@ -168,7 +153,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         m_panel.add(topAlignedPanel);
         m_panel.add(Box.createVerticalStrut(5));
 
-        return stockPanel;
+        return row;
     }
 
     public boolean deleteStockEntry() {
@@ -213,16 +198,13 @@ public class StockEntryPanel extends AbstractGUIComponent
             for (int i = STOCK_PANEL_STARTS_AT; i < components.length; i += DELTA_BETWEEN_STOCK_PANEL) {
                 JPanel parentPanel = (JPanel) components[i];
                 JPanel panel = (JPanel) parentPanel.getComponent(0);
+                RowValues rowValues = new RowValues(panel);
 
-                JTextField tickerField = (JTextField) panel.getComponent(2);
-                JTextField qtyField = (JTextField) panel.getComponent(4);
-                JTextField costField = (JTextField) panel.getComponent(6);
-
-                if (tickerField.getText().isBlank() || qtyField.getText().isBlank() || costField.getText().isBlank()) {
+                if (rowValues.ticker.isBlank() || rowValues.qty.isBlank() || rowValues.cost.isBlank()) {
                     return "Stock entries can not be empty";
                 }
 
-                String ticker = tickerField.getText().strip().toUpperCase();
+                String ticker = rowValues.ticker.strip().toUpperCase();
 
                 if (stockSeen.contains(ticker)) {
                     return "Duplicate Stock not allowed: " + ticker;
@@ -230,8 +212,8 @@ public class StockEntryPanel extends AbstractGUIComponent
                 stockSeen.add(ticker);
 
                 try {
-                    Float quantity = Float.parseFloat(qtyField.getText());
-                    Float cost = Float.parseFloat(costField.getText());
+                    Float quantity = Float.parseFloat(rowValues.qty);
+                    Float cost = Float.parseFloat(rowValues.cost);
                 } catch (Exception e) {
                     return "Stock quantity and total cost must be valid numbers";
                 }
@@ -269,18 +251,9 @@ public class StockEntryPanel extends AbstractGUIComponent
 
                 JPanel parentPanel = (JPanel) components[i];
                 JPanel panel = (JPanel) parentPanel.getComponent(0);
-
-                JTextField tickerField = (JTextField) panel.getComponent(2);
-                JTextField qtyField = (JTextField) panel.getComponent(4);
-                JTextField costField = (JTextField) panel.getComponent(6);
-
-                String ticker = tickerField.getText();
-                String quantity = qtyField.getText().strip();
-                String cost = costField.getText().strip();
-
-                insertToMap(ticker.toUpperCase(), quantity, cost);
-            } // end of for loop
-
+                RowValues rowValues = new RowValues(panel);
+                insertToMap(rowValues.ticker.toUpperCase(), rowValues.qty, rowValues.cost);
+            }
             writeToJson();
             reset();
             fillStockEntry();
@@ -288,7 +261,7 @@ public class StockEntryPanel extends AbstractGUIComponent
                     "Data Submitted",
                     "Submitted",
                     JOptionPane.INFORMATION_MESSAGE);
-        } // end of if statement
+        }
     }
 
     private void insertToMap(String ticker, String quantity, String cost) {
