@@ -215,9 +215,9 @@ public class StockEntryPanel extends AbstractGUIComponent
                 JPanel parentPanel = (JPanel) components[i];
                 JPanel panel = (JPanel) parentPanel.getComponent(0);
 
-                JTextField tickerField = (JTextField) panel.getComponent(0);
-                JTextField qtyField = (JTextField) panel.getComponent(2);
-                JTextField costField = (JTextField) panel.getComponent(4);
+                JTextField tickerField = (JTextField) panel.getComponent(2);
+                JTextField qtyField = (JTextField) panel.getComponent(4);
+                JTextField costField = (JTextField) panel.getComponent(6);
 
                 if (tickerField.getText().isBlank() || qtyField.getText().isBlank() || costField.getText().isBlank()) {
                     return "Stock entries can not be empty";
