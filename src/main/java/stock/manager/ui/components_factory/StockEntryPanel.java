@@ -25,6 +25,7 @@ public class StockEntryPanel extends AbstractGUIComponent
     private static final int HEIGHT = 26;
     private static final int STOCK_PANEL_STARTS_AT = 2;
     private static final int DELTA_BETWEEN_STOCK_PANEL = 2;
+    private Integer stockEntryCounter = 0;
 
     private final AppBuilderIF m_app;
     private final FileHandler m_fileHandler;
@@ -88,14 +89,18 @@ public class StockEntryPanel extends AbstractGUIComponent
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.setAlignmentY(Component.TOP_ALIGNMENT);
 
+        JLabel label0 = new JLabel("No.");
         JLabel label1 = new JLabel("Ticker");
         JLabel label2 = new JLabel("Quantity");
         JLabel label3 = new JLabel("Total Cost");
         Dimension textFieldSize = new Dimension(100, 25);
+        label0.setPreferredSize(textFieldSize);
         label1.setPreferredSize(textFieldSize);
         label2.setPreferredSize(textFieldSize);
         label3.setPreferredSize(textFieldSize);
 
+        panel.add(label0);
+        panel.add(Box.createHorizontalStrut(20)); // Gap between fields
         panel.add(label1);
         panel.add(Box.createHorizontalStrut(80)); // Gap between fields
         panel.add(label2);
@@ -114,9 +119,10 @@ public class StockEntryPanel extends AbstractGUIComponent
     public void fillStockEntry() {
         for (String ticker : m_stockMap.keySet()) {
             JPanel stockPanel = addStockEntry();
-            JTextField tickerField = (JTextField) stockPanel.getComponent(0);
-            JTextField qtyField = (JTextField) stockPanel.getComponent(2);
-            JTextField costField = (JTextField) stockPanel.getComponent(4);
+            JLabel counter = (JLabel) stockPanel.getComponent(0);
+            JTextField tickerField = (JTextField) stockPanel.getComponent(2);
+            JTextField qtyField = (JTextField) stockPanel.getComponent(4);
+            JTextField costField = (JTextField) stockPanel.getComponent(6);
 
             tickerField.setText(ticker);
             tickerField.setEditable(true);
@@ -126,11 +132,13 @@ public class StockEntryPanel extends AbstractGUIComponent
     }
 
     private JPanel addStockEntry() {
+        stockEntryCounter++;
         JPanel stockPanel = new JPanel();
         stockPanel.setLayout(new BoxLayout(stockPanel, BoxLayout.X_AXIS));
         stockPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         stockPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 
+        JLabel counter = new JLabel(stockEntryCounter.toString());
         JTextField textField1 = new JTextField();
         JTextField textField2 = new JTextField();
         JTextField textField3 = new JTextField();
@@ -144,6 +152,8 @@ public class StockEntryPanel extends AbstractGUIComponent
         textField3.setMaximumSize(textFieldSize);
 
         // Add text fields to panel with gaps
+        stockPanel.add(counter);
+        stockPanel.add(Box.createHorizontalStrut(10)); // Gap between fields
         stockPanel.add(textField1);
         stockPanel.add(Box.createHorizontalStrut(10)); // Gap between fields
         stockPanel.add(textField2);
@@ -168,6 +178,7 @@ public class StockEntryPanel extends AbstractGUIComponent
         if (length > STOCK_PANEL_STARTS_AT) { // 0: buttons, 1: labels
             m_panel.remove(length - 1); // gap filler (Box$Filler)
             m_panel.remove(length - 2); // stock entry panel
+            stockEntryCounter--;
             return true;
         }
         return false;
@@ -260,9 +271,9 @@ public class StockEntryPanel extends AbstractGUIComponent
                 JPanel parentPanel = (JPanel) components[i];
                 JPanel panel = (JPanel) parentPanel.getComponent(0);
 
-                JTextField tickerField = (JTextField) panel.getComponent(0);
-                JTextField qtyField = (JTextField) panel.getComponent(2);
-                JTextField costField = (JTextField) panel.getComponent(4);
+                JTextField tickerField = (JTextField) panel.getComponent(2);
+                JTextField qtyField = (JTextField) panel.getComponent(4);
+                JTextField costField = (JTextField) panel.getComponent(6);
 
                 String ticker = tickerField.getText();
                 String quantity = qtyField.getText().strip();
