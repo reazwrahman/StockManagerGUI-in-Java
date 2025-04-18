@@ -1,3 +1,14 @@
+# Prerequisite:
+- Java 21
+- Maven
+
+# How to run the program
+- to clean install/compile: `mvn clean install` 
+- to package the code: `mvn clean package` 
+- to run the GUI (from root dir): `java -jar target/StockManagerGUI-1.0-SNAPSHOT.jar`
+
+# Overview
+
 A GUI written in Java to easily manage and analyze a stock portfolio.
 
 Future work will include another backend component responsible for analyzing the portfolio.
