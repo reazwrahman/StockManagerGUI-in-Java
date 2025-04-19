@@ -1,10 +1,12 @@
 # Prerequisite:
+
 - Java 21
 - Maven
 
 # How to run the program
-- to clean install/compile: `mvn clean install` 
-- to package the code: `mvn clean package` 
+
+- to clean install/compile: `mvn clean install`
+- to package the code: `mvn clean package`
 - to run the GUI (from root dir): `java -jar target/StockManagerGUI-1.0-SNAPSHOT.jar`
 
 # Overview

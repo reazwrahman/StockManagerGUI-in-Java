@@ -1,0 +1,110 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class StockAppGUI{
+    +startFrame()
+    +renderTabs()
+    +renderRegions()
+    +refresh()
+}
+
+package components{
+
+    class GUIComponentIF{
+        +render()
+        +getDescription()
+    }
+    class GUIMenu implements GUIComponentIF{
+        +render()
+        +getDescription()
+        +getPanel()
+    }
+    StockAppGUI "1" *- "1" GUIMenu
+
+    class ImagePanel implements GUIComponentIF{
+        +render()
+        +getDescription()
+    }
+    StockAppGUI "1" *- "1" ImagePanel
+
+    class AnalysisDisplay implements GUIComponentIF{
+        +render()
+        +sortByReturnRate()
+        +sortByTotalGain()
+    }
+    StockAppGUI "1" *- "1" AnalysisDisplay
+
+    class StockEntryPanel implements GUIComponentIF{
+        +render()
+        +addStock()
+        +deleteStock()
+        +saveData()
+    }
+    StockAppGUI "1" *- "1" StockEntryPanel
+
+    class InstructionPanel implements GUIComponentIF{
+        +render()
+    }
+    StockAppGUI "1" *- "1" InstructionPanel
+}
+
+package stock_manager{
+
+    class Stock{
+        +ticker
+        +quantity
+        +totalCost
+    }
+
+    class StockWithPrice extends Stock{
+        +ticker
+        +quantity
+        +totalCost
+    }
+
+    class StockSorter{
+        +sortByTotalCost()
+    }
+    StockSorter "1" o- "...*" Stock
+
+    class StockAPIClient{
+        +postJson()
+    }
+    AnalysisDisplay --> StockSorter
+
+
+    class DisplayHelper{
+        +getTotalGainString()
+        +getReturnRateString()
+        -toString()
+    }
+    DisplayHelper --> StockAPIClient
+    AnalysisDisplay "1" *-> "1" DisplayHelper
+
+    class RequestModel{
+    }
+    StockAPIClient --> RequestModel
+
+    RequestModel "1" o- "..*" Stock
+
+    class ResponseModel{
+    }
+
+    StockAPIClient --> ResponseModel
+
+    ResponseModel "1" o- "..*" StockWithPrice
+
+
+}
+
+package utility{
+    class FileHandler{
+        +writeToFile()
+        +readFromFile()
+    }
+
+    StockEntryPanel --> FileHandler
+    GUIMenu --> FileHandler
+
+}
+@enduml
