@@ -8,6 +8,7 @@
 - to clean install/compile: `mvn clean install`
 - to package the code: `mvn clean package`
 - to run the GUI (from root dir): `java -jar target/StockManagerGUI-1.0-SNAPSHOT.jar`
+- change the `API_MODE` value in Configs.java to use either the local API or the remotely hosted API
 
 # Overview
 

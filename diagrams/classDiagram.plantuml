@@ -10,42 +10,45 @@ class StockAppGUI{
 
 package components{
 
-    class GUIComponentIF{
+    interface GUIComponentIF{
         +render()
         +getDescription()
     }
-    class GUIMenu implements GUIComponentIF{
+    StockAppGUI "1" *- "0...*" GUIComponentIF
+
+    abstract class AbstractGUIComponent implements GUIComponentIF{
+        +getPanel()
+    }
+
+    class GUIMenu extends AbstractGUIComponent implements GUIComponentIF{
         +render()
         +getDescription()
         +getPanel()
     }
-    StockAppGUI "1" *- "1" GUIMenu
 
-    class ImagePanel implements GUIComponentIF{
+    class ImagePanel extends AbstractGUIComponent implements GUIComponentIF{
         +render()
         +getDescription()
     }
-    StockAppGUI "1" *- "1" ImagePanel
 
-    class AnalysisDisplay implements GUIComponentIF{
-        +render()
-        +sortByReturnRate()
-        +sortByTotalGain()
-    }
-    StockAppGUI "1" *- "1" AnalysisDisplay
 
-    class StockEntryPanel implements GUIComponentIF{
+    class StockEntryPanel extends AbstractGUIComponent implements GUIComponentIF{
         +render()
         +addStock()
         +deleteStock()
         +saveData()
     }
-    StockAppGUI "1" *- "1" StockEntryPanel
 
-    class InstructionPanel implements GUIComponentIF{
+    class InstructionPanel extends AbstractGUIComponent implements GUIComponentIF{
         +render()
     }
-    StockAppGUI "1" *- "1" InstructionPanel
+
+    class AnalysisDisplay extends AbstractGUIComponent implements GUIComponentIF{
+            +render()
+            +sortByReturnRate()
+            +sortByTotalGain()
+    }
+
 }
 
 package stock_manager{
@@ -65,7 +68,7 @@ package stock_manager{
     class StockSorter{
         +sortByTotalCost()
     }
-    StockSorter "1" o- "...*" Stock
+    StockSorter "1" o- "0...*" Stock
 
     class StockAPIClient{
         +postJson()
@@ -82,17 +85,21 @@ package stock_manager{
     AnalysisDisplay "1" *-> "1" DisplayHelper
 
     class RequestModel{
+        -APIAccessKey
+        +List<Stock> stocks
+
     }
     StockAPIClient --> RequestModel
 
-    RequestModel "1" o- "..*" Stock
+    RequestModel "1" o- "0...*" Stock
 
     class ResponseModel{
+        +List<StockWithPrice>stocks
     }
 
     StockAPIClient --> ResponseModel
 
-    ResponseModel "1" o- "..*" StockWithPrice
+    ResponseModel "1" o- "0...*" StockWithPrice
 
 
 }
